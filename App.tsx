@@ -1,6 +1,6 @@
 import { Image, StyleSheet, Text, View } from 'react-native'
 import React from 'react'
-import ProfileScreen from './src/screens/ProfileScreen'
+import ProfileScreen from './src/screens/Profile/ProfileScreen'
 import { color } from './src/themes/theme'
 
 const App = () => {
