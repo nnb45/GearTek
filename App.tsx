@@ -8,12 +8,12 @@ const App = () => {
         <View style={styles.container}>
             <Text style={styles.title}>Hello World</Text>
             <Image source={require('../GearTek/assets/img/TMA-2.png')}/>
+            <Text style={styles.title}>hahah</Text>
         </View>
     )
 }
 
 export default App
-
 const styles = StyleSheet.create({
     container: {
         flex: 1,
