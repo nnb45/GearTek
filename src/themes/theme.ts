@@ -9,6 +9,8 @@ interface color {
     GreyLight1: ColorValue,
     GreyLight2: ColorValue,
     White: ColorValue
+    ColorInput: ColorValue
+
 }
 
 export const color: color = {
@@ -19,5 +21,6 @@ export const color: color = {
     Grey: '#BABABA',
     GreyLight1: '#F6F6F6',
     GreyLight2: '#F3F3F3',
-    White: '#FFFFFF'
+    White: '#FFFFFF',
+    ColorInput: '#BABABA'
 }

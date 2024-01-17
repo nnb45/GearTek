@@ -1,27 +1,17 @@
 import { Image, StyleSheet, Text, View } from 'react-native'
 import React from 'react'
-import ProfileScreen from './src/screens/Profile/ProfileScreen'
-import { color } from './src/themes/theme'
+import BottomNavigation from './src/components/BottomTab/BottomNavigation'
+import { NavigationContainer } from '@react-navigation/native'
+import AppNavigation from './src/components/navigation/AppNavigation'
 
 const App = () => {
     return (
-        <View style={styles.container}>
-            <Text style={styles.title}>Hello World</Text>
-            <Image source={require('../GearTek/assets/img/TMA-2.png')}/>
-            <Text style={styles.title}>hahah</Text>
-        </View>
+        <AppNavigation/>
     )
 }
 
 export default App
 const styles = StyleSheet.create({
-    container: {
-        flex: 1,
-        backgroundColor: color.White,
-    },
-    title: {
-        fontFamily: 'DMSans-Medium',
-        color: color.Primary,
-        fontSize: 24
-    }
+   
+    
 })
