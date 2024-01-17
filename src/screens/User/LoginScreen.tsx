@@ -1,4 +1,4 @@
-import { StyleSheet, Text, View, TouchableOpacity, TextInput, Image } from 'react-native'
+import { StyleSheet, Text, View, TouchableOpacity, TextInput, Image, ImageBackground } from 'react-native'
 import React, { useState } from 'react'
 import { NativeStackScreenProps } from '@react-navigation/native-stack';
 import { LoginStackParamList } from '../../components/navigation/LoginStack';
@@ -8,61 +8,67 @@ const LoginScreen: React.FC<PropsType> = props => {
     const [passwork, setPasswork] = useState(true)
 
     return (
-        <View style={styles.container}>
-            <View style={styles.containerText}>
-                <Text style={styles.geartTek}>GeartTek</Text>
-                <Text style={styles.text}>It's modular and designal to last</Text>
+        <ImageBackground
+            source={require('../../../assets/img/imagenen.png')}
+            style={styles.anhnen}>
+
+            <View style={styles.container}>
+
+                <View style={styles.containerText}>
+                    <Text style={styles.geartTek}>GeartTek</Text>
+                    <Text style={styles.text}>It's modular and designal to last</Text>
+                </View>
+
+                <View style={styles.inputcontainer}>
+                    <View style={styles.way}>
+                        <TextInput
+                            style={styles.input}
+                            placeholder='Email address' />
+
+                        <TouchableOpacity
+                            style={styles.gmailImage}>
+                            <Image
+                                source={require('../../../assets/img/mail.png')}
+                                style={styles.gmailicon} />
+
+                        </TouchableOpacity>
+                    </View>
+
+
+                    <View style={styles.way}>
+                        <TextInput
+                            style={styles.input}
+                            placeholder='Passwork'
+                            secureTextEntry={passwork} />
+
+                        <TouchableOpacity
+                            style={styles.gmailImage}>
+                            <Image
+                                source={require('../../../assets/img/lock.png')}
+                                style={styles.gmailicon} />
+
+                        </TouchableOpacity>
+                    </View>
+
+
+                    <Text style={styles.forgot}>Forgot Passwork</Text>
+
+
+                    <TouchableOpacity style={styles.button}>
+                        <Text style={styles.buttonLabel}>Sign In</Text>
+                    </TouchableOpacity>
+
+                    <View style={styles.here}>
+                        <Text style={styles.account}>Didn't have any account?{' '}</Text>
+                        <TouchableOpacity >
+                            <Text style={styles.signup}>Sign Up here</Text>
+                        </TouchableOpacity>
+                    </View>
+
+                </View>
+
             </View>
-
-            <View style={styles.inputcontainer}>
-                <View style={styles.way}>
-                    <TextInput
-                        style={styles.input}
-                        placeholder='Email address' />
-
-                    <TouchableOpacity
-                        style={styles.gmailImage}>
-                        <Image
-                            source={require('../../../assets/img/logo.png')}
-                            style={styles.gmailicon} />
-
-                    </TouchableOpacity>
-                </View>
-
-
-                <View style={styles.way}>
-                    <TextInput
-                        style={styles.input}
-                        placeholder='Passwork'
-                        secureTextEntry={passwork} />
-
-                    <TouchableOpacity
-                        style={styles.gmailImage}>
-                        <Image
-                            source={require('../../../assets/img/logo.png')}
-                            style={styles.gmailicon} />
-
-                    </TouchableOpacity>
-                </View>
-
-
-                <Text style={styles.forgot}>Forgot Passwork</Text>
-
-
-                <TouchableOpacity style={styles.button}>
-                    <Text style={styles.buttonLabel}>Sign In</Text>
-                </TouchableOpacity>
-
-                <View style={styles.here}>
-                    <Text style={styles.account}>Didn't have any account?{' '}</Text>
-                    <TouchableOpacity >
-                        <Text style={styles.signup}>Sign Up here</Text>
-                    </TouchableOpacity>
-                </View>
-
-            </View>
-
-        </View>
+        </ImageBackground>
     )
 }
 
@@ -71,15 +77,15 @@ export default LoginScreen
 
 const styles = StyleSheet.create({
     gmailicon: {
-        width: 28,
-        height: 28,
+        width: 22,
+        height: 22,
     },
     gmailImage: {
         width: 30,
         height: 18,
         position: 'absolute',
-        top: 10,
-        left: 7
+        top: 13.5,
+        left: 8
     },
     signup: {
         textDecorationLine: 'underline',
@@ -150,14 +156,17 @@ const styles = StyleSheet.create({
         width: '100%',
         height: '100%',
         padding: 15,
-        backgroundColor: 'gray',
+  
         alignItems: 'center',
         justifyContent: 'space-between'
     },
     containerText: {
         paddingVertical: 90,
-        backgroundColor: 'gray',
         alignItems: 'center',
 
+    },
+    anhnen:{
+        width: '100%',
+        height: '100%',
     }
 })
