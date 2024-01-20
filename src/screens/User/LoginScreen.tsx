@@ -2,10 +2,16 @@ import { StyleSheet, Text, View, TouchableOpacity, TextInput, Image, ImageBackgr
 import React, { useState } from 'react'
 import { NativeStackScreenProps } from '@react-navigation/native-stack';
 import { LoginStackParamList } from '../../components/navigation/LoginStack';
+import { color } from '../../themes/theme';
+import { KeyboardAwareScrollView } from 'react-native-keyboard-aware-scroll-view';
+
+
 
 type PropsType = NativeStackScreenProps<LoginStackParamList, 'LoginScreen'>;
 const LoginScreen: React.FC<PropsType> = props => {
     const [passwork, setPasswork] = useState(true)
+
+    
 
     return (
         <ImageBackground
@@ -89,8 +95,9 @@ const styles = StyleSheet.create({
     },
     signup: {
         textDecorationLine: 'underline',
-        color: 'green',
-        fontWeight: '800'
+        color: color.Primary,
+        fontFamily: 'DMSans-Medium'
+
     },
     here: {
         flexDirection: 'row',
@@ -101,20 +108,21 @@ const styles = StyleSheet.create({
     },
     account: {
         textAlign: 'center',
-        color: '#fff',
-        fontWeight: '400',
+        color: color.White,
+        fontFamily: 'DMSans-Medium'
+
     },
     buttonLabel: {
-        color: '#fff',
+        color: color.White,
         fontSize: 16,
-        fontWeight: '500',
+        fontFamily: 'DMSans-Medium',
         lineHeight: 26,
         letterSpacing: 1
     },
     button: {
         width: '100%',
         height: 50,
-        backgroundColor: 'green',
+        backgroundColor: color.Primary,
         borderRadius: 10,
         alignItems: 'center',
         justifyContent: 'center',
@@ -122,8 +130,9 @@ const styles = StyleSheet.create({
     },
     forgot: {
         textAlign: 'center',
-        color: '#fff',
-        fontWeight: '500',
+        color: color.White,
+        fontFamily: 'DMSans-Medium'
+
     },
     way: {
         marginBottom: 25
@@ -131,26 +140,26 @@ const styles = StyleSheet.create({
     input: {
         width: '100%',
         height: 48,
-        backgroundColor: '#fff',
+        backgroundColor: color.White,
         borderRadius: 8,
-        borderColor: '#252a32',
         paddingHorizontal: 17,
         paddingVertical: 11,
-        paddingLeft: 40
+        paddingLeft: 40,
+        fontFamily: 'DMSans-Medium'
     },
     inputcontainer: {
         width: '100%',
 
     },
     text: {
-        color: '#fff',
-        fontWeight: '400',
+        color: color.White,
+        fontFamily: 'DMSans-Medium'
     },
     geartTek: {
         fontSize: 40,
-        fontWeight: '700',
-        color: '#fff',
-        alignItems: 'center'
+        color: color.White,
+        alignItems: 'center',
+        fontFamily: 'DMSans-Bold'
     },
     container: {
         width: '100%',
@@ -166,7 +175,6 @@ const styles = StyleSheet.create({
 
     },
     anhnen:{
-        width: '100%',
-        height: '100%',
+        flex: 1
     }
 })
