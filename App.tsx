@@ -1,27 +1,17 @@
-import { Image, StyleSheet, Text, View } from 'react-native'
+import { Image, StyleSheet, Text, View, SafeAreaView } from 'react-native'
 import React from 'react'
 import ProfileScreen from './src/screens/Profile/ProfileScreen'
+import ProductCart from './src/screens/Home/ProductCart'
+import SanPham from './src/screens/Home/sanpham'
 import { color } from './src/themes/theme'
 
 const App = () => {
     return (
-        <View style={styles.container}>
-            <Text style={styles.title}>Hello World</Text>
-            <Image source={require('../GearTek/assets/img/TMA-2.png')} />
-        </View>
+       <SafeAreaView style={{flex: 1}}>
+              <ProductCart/>
+       </SafeAreaView>
     )
 }
 
 export default App
 
-const styles = StyleSheet.create({
-    container: {
-        flex: 1,
-        backgroundColor: color.White,
-    },
-    title: {
-        fontFamily: 'DMSans-Medium',
-        color: color.Primary,
-        fontSize: 24
-    }
-})

@@ -4,7 +4,7 @@ import Icon from 'react-native-vector-icons/FontAwesome';
 
 const screenWidth = Dimensions.get('window').width;
 
-const ProductDetailScreen = () => {
+const ProductCart = () => {
   const data = [
     { key: '1', type: 'image', source: require('../../../assets/img/TMA-2.png') },
     { key: '2', type: 'image', source: require('../../../assets/img/TMA-2_2.png') },
@@ -252,4 +252,4 @@ const styles = StyleSheet.create({
   },
 });
 
-export default ProductDetailScreen;
+export default ProductCart;
