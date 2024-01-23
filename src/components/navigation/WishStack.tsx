@@ -11,7 +11,7 @@ export type WishStackParamList = {
 
 const Stack = createNativeStackNavigator<WishStackParamList>();
 
-const ProfileStack = () => {
+const WishStack = () => {
     return (
         <Stack.Navigator
             initialRouteName="WishScreen"
@@ -24,4 +24,4 @@ const ProfileStack = () => {
     )
 }
 
-export default ProfileStack
+export default WishStack

@@ -1,17 +1,16 @@
-import { Image, StyleSheet, Text, View, SafeAreaView } from 'react-native'
+import { View } from 'react-native'
 import React from 'react'
-import ProfileScreen from './src/screens/Profile/ProfileScreen'
-import ProductCart from './src/screens/Home/ProductCart'
-import SanPham from './src/screens/Home/sanpham'
-import { color } from './src/themes/theme'
+import AppNavigation from './src/components/navigation/AppNavigation'
+import { AppContextProvider } from './src/components/context/AppContext'
 
 const App = () => {
     return (
-       <SafeAreaView style={{flex: 1}}>
-              <ProductCart/>
-       </SafeAreaView>
+        <View style={{ flex: 1 }}>
+            <AppContextProvider>
+                <AppNavigation />
+            </AppContextProvider>
+        </View>
     )
 }
 
 export default App
-

@@ -7,6 +7,13 @@ type PropsType = NativeStackScreenProps<LoginStackParamList, 'LoginScreen'>;
 const LoginScreen: React.FC<PropsType> = props => {
     const [passwork, setPasswork] = useState(true)
 
+    //handle naviagtion regster
+    const _navigationRegister = () => {
+        navigation.navigate('RegisterScreen')
+    }
+
+     
+    const { navigation } = props
     return (
         <ImageBackground
             source={require('../../../assets/img/imagenen.png')}
