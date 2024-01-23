@@ -1,17 +1,16 @@
-import { Image, StyleSheet, Text, View } from 'react-native'
+import { View } from 'react-native'
 import React from 'react'
-import BottomNavigation from './src/components/BottomTab/BottomNavigation'
-import { NavigationContainer } from '@react-navigation/native'
 import AppNavigation from './src/components/navigation/AppNavigation'
+import { AppContextProvider } from './src/components/context/AppContext'
 
 const App = () => {
     return (
-        <AppNavigation/>
+        <View style={{ flex: 1 }}>
+            <AppContextProvider>
+                <AppNavigation />
+            </AppContextProvider>
+        </View>
     )
 }
 
 export default App
-const styles = StyleSheet.create({
-   
-    
-})
