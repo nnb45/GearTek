@@ -1,16 +1,19 @@
 import { StyleSheet, Text, View, TouchableOpacity, TextInput, Image, ImageBackground } from 'react-native'
-import React, { useState } from 'react'
+import React, { useContext, useState } from 'react'
 import { NativeStackScreenProps } from '@react-navigation/native-stack';
 import { LoginStackParamList } from '../../components/navigation/LoginStack';
 import { color } from '../../themes/theme';
 import { KeyboardAwareScrollView } from 'react-native-keyboard-aware-scroll-view';
-
-
+import { AppContext } from '../../components/context/AppContext';
 
 type PropsType = NativeStackScreenProps<LoginStackParamList, 'LoginScreen'>;
 const LoginScreen: React.FC<PropsType> = props => {
     const [passwork, setPasswork] = useState(true)
-
+    const { setIsLogin } = useContext(AppContext);
+    const handleLogin = () => {
+        console.log('Login Success!!!!');
+        setIsLogin(true);
+    }
     return (
         <ImageBackground
             source={require('../../../assets/img/imagenen.png')}
@@ -54,7 +57,7 @@ const LoginScreen: React.FC<PropsType> = props => {
 
                     <Text style={styles.forgot}>Forgot Passwork</Text>
 
-                    <TouchableOpacity style={styles.button}>
+                    <TouchableOpacity style={styles.button} onPress={handleLogin}>
                         <Text style={styles.buttonLabel}>Sign In</Text>
                     </TouchableOpacity>
 
@@ -160,7 +163,7 @@ const styles = StyleSheet.create({
         paddingVertical: 90,
         alignItems: 'center',
     },
-    anhnen:{
+    anhnen: {
         flex: 1
     }
 })

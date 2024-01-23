@@ -10,7 +10,7 @@ const AppNavigation = () => {
     return (
         <View style={{ flex: 1 }}>
             <NavigationContainer>
-                {isLogin ? <LoginStack /> : <BottomNavigation />}
+                {isLogin ? <BottomNavigation /> : <LoginStack />}
             </NavigationContainer>
         </View>
     )
