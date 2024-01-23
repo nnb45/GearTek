@@ -1,5 +1,5 @@
 export * from './LeftIcons'
-// export * from './CartIcons'
+export * from './CartIcons'
 // export * from './CartIcons_active'
 // export * from './FavoriteIcons'
 // export * from './FavoriteIcons_active'
