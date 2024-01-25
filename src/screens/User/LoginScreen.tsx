@@ -8,7 +8,7 @@ import { AppContext } from '../../components/context/AppContext';
 
 type PropsType = NativeStackScreenProps<LoginStackParamList, 'LoginScreen'>;
 const LoginScreen: React.FC<PropsType> = props => {
-    const [passwork, setPasswork] = useState(true)
+    const [passwork, setPasswork] = useState<boolean>(true)
     const { setIsLogin } = useContext(AppContext);
     const handleLogin = () => {
         console.log('Login Success!!!!');
