@@ -1,10 +1,10 @@
 import { StyleSheet, Text, View, TouchableOpacity, TextInput, Image, ImageBackground } from 'react-native'
-import React, { useState } from 'react'
+import React, { useState, useContext } from 'react'
 import { NativeStackScreenProps } from '@react-navigation/native-stack';
 import { LoginStackParamList } from '../../components/navigation/LoginStack';
 import { color } from '../../themes/theme';
 import { KeyboardAwareScrollView } from 'react-native-keyboard-aware-scroll-view';
-
+import { AppContext } from '../../components/context/AppContext';
 
 
 type PropsType = NativeStackScreenProps<LoginStackParamList, 'LoginScreen'>;
@@ -15,7 +15,11 @@ const LoginScreen: React.FC<PropsType> = props => {
     const _navigationRegister = () => {
         navigation.navigate('RegisterScreen')
     }
-     
+    const { setIsLogin } = useContext(AppContext);
+    const _handleLogin = () => {
+        console.log('Login Success!!!!');
+        setIsLogin(true);
+    }
     const { navigation } = props
     return (
         <ImageBackground
@@ -64,13 +68,13 @@ const LoginScreen: React.FC<PropsType> = props => {
                     <Text style={styles.forgot}>Forgot Passwork</Text>
 
 
-                    <TouchableOpacity style={styles.button}>
+                    <TouchableOpacity style={styles.button} onPress={_handleLogin}>
                         <Text style={styles.buttonLabel}>Sign In</Text>
                     </TouchableOpacity>
 
                     <View style={styles.here}>
                         <Text style={styles.account}>Didn't have any account?{' '}</Text>
-                        <TouchableOpacity >
+                        <TouchableOpacity onPress={_navigationRegister}>
                             <Text style={styles.signup}>Sign Up here</Text>
                         </TouchableOpacity>
                     </View>
@@ -169,7 +173,7 @@ const styles = StyleSheet.create({
         width: '100%',
         height: '100%',
         padding: 15,
-  
+
         alignItems: 'center',
         justifyContent: 'space-between'
     },
@@ -178,7 +182,7 @@ const styles = StyleSheet.create({
         alignItems: 'center',
 
     },
-    anhnen:{
+    anhnen: {
         flex: 1
     }
 })
