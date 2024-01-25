@@ -1,27 +1,16 @@
-import { Image, StyleSheet, Text, View } from 'react-native'
+import { View } from 'react-native'
 import React from 'react'
-import ProfileScreen from './src/screens/Profile/ProfileScreen'
-import { color } from './src/themes/theme'
+import AppNavigation from './src/components/navigation/AppNavigation'
+import { AppContextProvider } from './src/components/context/AppContext'
 
 const App = () => {
     return (
-        <View style={styles.container}>
-            <Text style={styles.title}>Hello World</Text>
-            <Image source={require('../GearTek/assets/img/TMA-2.png')} />
+        <View style={{ flex: 1 }}>
+            <AppContextProvider>
+                <AppNavigation />
+            </AppContextProvider>
         </View>
     )
 }
 
 export default App
-
-const styles = StyleSheet.create({
-    container: {
-        flex: 1,
-        backgroundColor: color.White,
-    },
-    title: {
-        fontFamily: 'DMSans-Medium',
-        color: color.Primary,
-        fontSize: 24
-    }
-})
