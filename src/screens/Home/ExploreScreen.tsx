@@ -133,8 +133,7 @@ const styles = StyleSheet.create({
         fontSize: 12,
         lineHeight: 20,
         color: 'black',
-        fontWeight: '700',
-        fontFamily: 'DMSans-Regular',
+        fontFamily: 'DMSans-Bold',
         marginBottom: 8
     },
     txtNameProduct: {

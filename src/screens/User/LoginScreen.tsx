@@ -1,5 +1,5 @@
 import { StyleSheet, Text, View, TouchableOpacity, TextInput, Image, ImageBackground } from 'react-native'
-import React, { useState, useContext } from 'react'
+import React, { useContext, useState} from 'react'
 import { NativeStackScreenProps } from '@react-navigation/native-stack';
 import { LoginStackParamList } from '../../components/navigation/LoginStack';
 import { color } from '../../themes/theme';
@@ -44,7 +44,6 @@ const LoginScreen: React.FC<PropsType> = props => {
                             <Image
                                 source={require('../../../assets/img/mail.png')}
                                 style={styles.gmailicon} />
-
                         </TouchableOpacity>
                     </View>
 
@@ -60,10 +59,8 @@ const LoginScreen: React.FC<PropsType> = props => {
                             <Image
                                 source={require('../../../assets/img/lock.png')}
                                 style={styles.gmailicon} />
-
                         </TouchableOpacity>
                     </View>
-
 
                     <Text style={styles.forgot}>Forgot Passwork</Text>
 
@@ -78,9 +75,7 @@ const LoginScreen: React.FC<PropsType> = props => {
                             <Text style={styles.signup}>Sign Up here</Text>
                         </TouchableOpacity>
                     </View>
-
                 </View>
-
             </View>
         </ImageBackground>
     )
@@ -105,7 +100,6 @@ const styles = StyleSheet.create({
         textDecorationLine: 'underline',
         color: color.Primary,
         fontFamily: 'DMSans-Medium'
-
     },
     here: {
         flexDirection: 'row',
@@ -118,7 +112,6 @@ const styles = StyleSheet.create({
         textAlign: 'center',
         color: color.White,
         fontFamily: 'DMSans-Medium'
-
     },
     buttonLabel: {
         color: color.White,
@@ -140,7 +133,6 @@ const styles = StyleSheet.create({
         textAlign: 'center',
         color: color.White,
         fontFamily: 'DMSans-Medium'
-
     },
     way: {
         marginBottom: 25
@@ -157,7 +149,6 @@ const styles = StyleSheet.create({
     },
     inputcontainer: {
         width: '100%',
-
     },
     text: {
         color: color.White,
@@ -173,14 +164,12 @@ const styles = StyleSheet.create({
         width: '100%',
         height: '100%',
         padding: 15,
-
         alignItems: 'center',
         justifyContent: 'space-between'
     },
     containerText: {
         paddingVertical: 90,
         alignItems: 'center',
-
     },
     anhnen: {
         flex: 1
