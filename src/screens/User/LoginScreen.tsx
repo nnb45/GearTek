@@ -1,19 +1,26 @@
 import { StyleSheet, Text, View, TouchableOpacity, TextInput, Image, ImageBackground } from 'react-native'
-import React, { useContext, useState } from 'react'
+import React, { useContext, useState} from 'react'
 import { NativeStackScreenProps } from '@react-navigation/native-stack';
 import { LoginStackParamList } from '../../components/navigation/LoginStack';
 import { color } from '../../themes/theme';
 import { KeyboardAwareScrollView } from 'react-native-keyboard-aware-scroll-view';
 import { AppContext } from '../../components/context/AppContext';
 
+
 type PropsType = NativeStackScreenProps<LoginStackParamList, 'LoginScreen'>;
 const LoginScreen: React.FC<PropsType> = props => {
-    const [passwork, setPasswork] = useState<boolean>(true)
+    const [passwork, setPasswork] = useState(true)
+
+    //handle naviagtion regster
+    const _navigationRegister = () => {
+        navigation.navigate('RegisterScreen')
+    }
     const { setIsLogin } = useContext(AppContext);
-    const handleLogin = () => {
+    const _handleLogin = () => {
         console.log('Login Success!!!!');
         setIsLogin(true);
     }
+    const { navigation } = props
     return (
         <ImageBackground
             source={require('../../../assets/img/imagenen.png')}
@@ -57,13 +64,14 @@ const LoginScreen: React.FC<PropsType> = props => {
 
                     <Text style={styles.forgot}>Forgot Passwork</Text>
 
-                    <TouchableOpacity style={styles.button} onPress={handleLogin}>
+
+                    <TouchableOpacity style={styles.button} onPress={_handleLogin}>
                         <Text style={styles.buttonLabel}>Sign In</Text>
                     </TouchableOpacity>
 
                     <View style={styles.here}>
                         <Text style={styles.account}>Didn't have any account?{' '}</Text>
-                        <TouchableOpacity >
+                        <TouchableOpacity onPress={_navigationRegister}>
                             <Text style={styles.signup}>Sign Up here</Text>
                         </TouchableOpacity>
                     </View>
