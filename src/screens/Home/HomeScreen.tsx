@@ -320,7 +320,7 @@ const styles = StyleSheet.create({
     },
     today: {
         fontSize: 24,
-        fontFamily: 'DMSans-Medium',
+        fontFamily: 'DMSans-Bold',
         color: 'black'
     },
     hi: {
