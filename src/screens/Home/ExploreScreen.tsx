@@ -1,4 +1,4 @@
-import { FlatList, StyleSheet, Text, TouchableOpacity, View, Image } from 'react-native'
+import { FlatList, StyleSheet, Text, TouchableOpacity, View, Image, Dimensions, StatusBar } from 'react-native'
 import React, { useState } from 'react'
 import { NativeStackScreenProps } from '@react-navigation/native-stack';
 import { HomeStackParamList } from '../../components/navigation/HomeStack';
@@ -54,7 +54,8 @@ const _itemCardProduct = ({ item }: { item: ProductProps }) => {
                 style={styles.imgProduct}
                 source={{ uri: item.image }} />
             <View style={styles.cardMoney}>
-                <Text style={styles.txtNameProduct}>{item.name}</Text>
+                <Text style={styles.txtNameProduct} numberOfLines={1}
+                    ellipsizeMode='tail'>{item.name}</Text>
                 <Text style={styles.txtPriceProduct}>USD {item.price}</Text>
                 <View style={styles.cardRating}>
                     <View style={styles.itemRating}>
@@ -100,12 +101,17 @@ const ExploreScreen: React.FC<PropsType> = props => {
     const { navigation } = props
     return (
         <View style={styles.container}>
+            <StatusBar
+                barStyle={'light-content'}
+                translucent={true}
+                backgroundColor={'transparent'} />
             <View style={styles.containerProduct}>
                 <FlatList
                     data={popularData}
                     renderItem={_itemCardProduct}
                     ListHeaderComponent={_listHeader}
-                    numColumns={2} />
+                    numColumns={2}
+                    showsHorizontalScrollIndicator={true} />
             </View>
         </View>
     )
@@ -164,18 +170,18 @@ const styles = StyleSheet.create({
         marginLeft: 16
     },
     cardProduct: {
-        width: 160,
-        height: 213,
+        // width: 160,
+        width: Dimensions.get('screen').width * 0.4,
+        height: 200,
         borderRadius: 15,
         backgroundColor: color.White,
-        margin: 16
+        marginLeft: 26,
+        marginVertical: 14
     },
     containerProduct: {
         flex: 1,
         backgroundColor: color.GreyLight2,
         marginTop: 24,
-        borderTopLeftRadius: 32,
-        borderTopRightRadius: 32,
     },
     txtTitle: {
         fontSize: 14,
@@ -235,12 +241,13 @@ const styles = StyleSheet.create({
     },
     information: {
         width: '100%',
-        height: 200,
-        paddingHorizontal: 24,
+        height: 220,
         backgroundColor: color.White,
+        paddingHorizontal: 24,
     },
     container: {
         flex: 1,
+        // width: Dimensions.get('screen').width * 0.8,
         backgroundColor: color.White,
     }
 })
