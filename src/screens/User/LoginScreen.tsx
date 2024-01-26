@@ -1,5 +1,5 @@
-import { StyleSheet, Text, View, TouchableOpacity, TextInput, Image, ImageBackground } from 'react-native'
-import React, { useContext, useState} from 'react'
+import { StyleSheet, Text, View, TouchableOpacity, TextInput, Image, ImageBackground, StatusBar } from 'react-native'
+import React, { useContext, useState } from 'react'
 import { NativeStackScreenProps } from '@react-navigation/native-stack';
 import { LoginStackParamList } from '../../components/navigation/LoginStack';
 import { color } from '../../themes/theme';
@@ -22,14 +22,20 @@ const LoginScreen: React.FC<PropsType> = props => {
     }
     const { navigation } = props
     return (
+
+
+
         <ImageBackground
             source={require('../../../assets/img/imagenen.png')}
             style={styles.anhnen}>
 
             <View style={styles.container}>
-
+                <StatusBar
+                    barStyle={'light-content'}
+                    translucent={true}
+                backgroundColor={'transparent'}/>
                 <View style={styles.containerText}>
-                    <Text style={styles.geartTek}>GeartTek</Text>
+                    <Text style={styles.geartTek}>GearTek</Text>
                     <Text style={styles.text}>It's modular and designal to last</Text>
                 </View>
 
@@ -37,7 +43,8 @@ const LoginScreen: React.FC<PropsType> = props => {
                     <View style={styles.way}>
                         <TextInput
                             style={styles.input}
-                            placeholder='Email address' />
+                            placeholder='Email address'
+                            placeholderTextColor={color.Grey} />
 
                         <TouchableOpacity
                             style={styles.gmailImage}>
@@ -51,7 +58,8 @@ const LoginScreen: React.FC<PropsType> = props => {
                     <View style={styles.way}>
                         <TextInput
                             style={styles.input}
-                            placeholder='Passwork'
+                            placeholder='Password'
+                            placeholderTextColor={color.Grey}
                             secureTextEntry={passwork} />
 
                         <TouchableOpacity
@@ -62,7 +70,7 @@ const LoginScreen: React.FC<PropsType> = props => {
                         </TouchableOpacity>
                     </View>
 
-                    <Text style={styles.forgot}>Forgot Passwork</Text>
+                    <Text style={styles.forgot}>Forgot Password</Text>
 
 
                     <TouchableOpacity style={styles.button} onPress={_handleLogin}>
@@ -78,6 +86,7 @@ const LoginScreen: React.FC<PropsType> = props => {
                 </View>
             </View>
         </ImageBackground>
+
     )
 }
 
@@ -86,15 +95,15 @@ export default LoginScreen
 
 const styles = StyleSheet.create({
     gmailicon: {
-        width: 22,
-        height: 22,
+        width: 20,
+        height: 20,
     },
     gmailImage: {
         width: 30,
         height: 18,
         position: 'absolute',
-        top: 13.5,
-        left: 8
+        paddingVertical: 15,
+        marginStart: 15
     },
     signup: {
         textDecorationLine: 'underline',
@@ -135,17 +144,20 @@ const styles = StyleSheet.create({
         fontFamily: 'DMSans-Medium'
     },
     way: {
-        marginBottom: 25
+        marginBottom: 25,
+        color: color.Grey
     },
     input: {
         width: '100%',
-        height: 48,
+        height: 50,
         backgroundColor: color.White,
         borderRadius: 8,
         paddingHorizontal: 17,
+        justifyContent: 'center',
         paddingVertical: 11,
         paddingLeft: 40,
-        fontFamily: 'DMSans-Medium'
+        fontFamily: 'DMSans-Regular',
+        color: color.Grey
     },
     inputcontainer: {
         width: '100%',

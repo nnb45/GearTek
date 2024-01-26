@@ -1,4 +1,4 @@
-import { Image, SafeAreaView, ScrollView, StyleSheet, Text, View } from 'react-native'
+import { Image, SafeAreaView, ScrollView, StatusBar, StyleSheet, Text, View } from 'react-native'
 import React, { useContext } from 'react'
 import { NativeStackScreenProps } from '@react-navigation/native-stack';
 import { ProfileStackParamList } from '../../components/navigation/ProfileStack';
@@ -13,6 +13,9 @@ const ProfileScreen: React.FC<PropsType> = props => {
     const {setIsLogin} = useContext(AppContext)
     return (
         <SafeAreaView style={styles.container}>
+            <StatusBar
+                barStyle={'dark-content'}
+                backgroundColor={'transparent'} />
             <Header
                 styleContainer={{ backgroundColor: color.White }}
                 title='Profile'
