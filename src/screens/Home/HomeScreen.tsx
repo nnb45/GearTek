@@ -1,4 +1,4 @@
-import { Button, StyleSheet, Text, View, Image, TextInput, TouchableOpacity, ScrollView, FlatList } from 'react-native'
+import { Button, StyleSheet, Text, View, Image, TextInput, TouchableOpacity, ScrollView, FlatList, Pressable } from 'react-native'
 import React, { useState } from 'react'
 import { NativeStackScreenProps } from '@react-navigation/native-stack';
 import { HomeStackParamList } from '../../components/navigation/HomeStack';
@@ -29,13 +29,19 @@ interface SanPham2 {
 
 const HomeScreen: React.FC<PropsType> = props => {
     const { navigation } = props;
-    //handle navi
-    // const _navigationSearch = () => {
-    //     navigation.navigate('SearchScreen')
-    // }
-    // const _navigationShopnow = () => {
-    //     navigation.navigate('ExploreScreen')
-    // }
+
+    const _detail = () => {
+        navigation.navigate('ProductDetailScreen');
+    }
+    const _explore = () => {
+        navigation.navigate('ExploreScreen')
+    }
+    const _search = () => {
+        navigation.navigate('SearchScreen')
+    }
+    const _profile = () => {
+        navigation.navigate('ProfileScreen');
+    }
     const [all, setAll] = useState(IT)
     const [selectedIndex, setselectedIndex] = useState(1)// set mau chu 
 
@@ -52,6 +58,7 @@ const HomeScreen: React.FC<PropsType> = props => {
                     color: id == selectedIndex ? 'black' : 'gray',
                     backgroundColor: id == selectedIndex ? color.Primary : color.GreyLight2,
                     fontSize: 14,
+                    fontFamily: 'DMSans-Regular',
                     paddingHorizontal: 15,
                     paddingVertical: 2,
                     borderRadius: 15
@@ -71,8 +78,7 @@ const HomeScreen: React.FC<PropsType> = props => {
             <View style={styles.list}>
                 <View>
                     <Text style={styles.text}>{name}</Text>
-
-                    <TouchableOpacity style={styles.button}>
+                    <TouchableOpacity style={styles.button} onPress={_explore}>
                         <Text style={styles.textBt}>Shop now</Text>
                     </TouchableOpacity>
                 </View>
@@ -88,15 +94,13 @@ const HomeScreen: React.FC<PropsType> = props => {
             </View>
         )
     }
-    const _navigationCart = () => {
-        navigation.navigate('ProductDetailScreen')
-    }
+
 
 
     const renderSanpham2 = ({ item }: { item: SanPham2 }) => {
         const { id, name, avatar, price } = item
         return (
-            <View style={styles.sanpham}>
+            <TouchableOpacity style={styles.sanpham} onPress={_detail}>
                 <View>
                     <Image
                         source={{ uri: avatar }}
@@ -104,13 +108,13 @@ const HomeScreen: React.FC<PropsType> = props => {
                     />
                 </View>
                 <View>
-                    <Text style={styles.infor}>{name}</Text>
+                    <Text style={styles.productName}>{name}</Text>
                 </View>
                 <View>
                     <Text style={styles.infor}>USD {price}</Text>
                 </View>
 
-            </View>
+            </TouchableOpacity>
         )
     }
 
@@ -143,10 +147,13 @@ const HomeScreen: React.FC<PropsType> = props => {
                                 GearTek
                             </Text>
                         </View>
+                        <Pressable onPress={_profile}>
+                            <Image
+                                source={require('../../../assets/img/avatar.png')}
+                                style={styles.avatar}
+                            />
+                        </Pressable>
 
-                        <Image
-                            source={require('../../../assets/img/avatar.png')}
-                            style={styles.avatar} />
 
                     </View>
 
@@ -167,6 +174,7 @@ const HomeScreen: React.FC<PropsType> = props => {
                                 placeholder='Search headphone' />
 
                             <TouchableOpacity
+                                onPress={_search}
                                 style={styles.searchImage}>
                                 <Image
                                     source={require('../../../assets/img/search.png')}
@@ -176,14 +184,13 @@ const HomeScreen: React.FC<PropsType> = props => {
                     </View>
                 </View>
                 <View style={styles.flex8}>
-                    <View>
+                    <View >
                         <FlatList
                             showsHorizontalScrollIndicator={false}
                             showsVerticalScrollIndicator={false}
                             horizontal={true}
                             data={all}
                             renderItem={renderList}
-
                         />
                     </View>
 
@@ -204,7 +211,7 @@ const HomeScreen: React.FC<PropsType> = props => {
                             Featured Products
                         </Text>
                         <TouchableOpacity>
-                            <Text>See All</Text>
+                            <Text style={styles.infor}>See All</Text>
                         </TouchableOpacity>
                     </View>
 
@@ -230,8 +237,13 @@ export default HomeScreen
 
 const styles = StyleSheet.create({
     infor: {
+        fontSize: 13,
+        fontFamily: 'DMSans-Bold',
+        color: 'black'
+    },
+    productName: {
         fontSize: 15,
-        fontFamily: 'DMSans-Medium',
+        fontFamily: 'DMSans-Regular',
         color: 'black'
     },
     sanpham: {
@@ -350,6 +362,10 @@ const styles = StyleSheet.create({
         borderRadius: 12,
         margin: 8
     },
+    renderButton: {
+        fontFamily: 'DMSans-Medium',
+        fontSize: 14
+    }
 })
 
 var IT = [
