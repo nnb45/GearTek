@@ -121,7 +121,7 @@ const HomeScreen: React.FC<PropsType> = props => {
 
 
     return (
-        <ScrollView>
+        <ScrollView showsVerticalScrollIndicator={false}>
 
 
             <View style={styles.container}>
