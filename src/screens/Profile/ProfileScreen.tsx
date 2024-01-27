@@ -44,7 +44,7 @@ const ProfileScreen: React.FC<PropsType> = props => {
                     </View>
                     <View style={styles.title}>
                         <Text style={styles.heading}>Personal</Text>
-                        <Text style={styles.body}>Report a Bug</Text>
+                        <Text style={styles.body} onPress={()=> navigation.navigate('PaymentMethodScreen')}>Report a Bug</Text>
                         <Text style={styles.body} onPress={()=> setIsLogin(false)}>Logout</Text>
                     </View>
                 </View>

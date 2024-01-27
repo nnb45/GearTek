@@ -4,7 +4,7 @@ import HomeScreen from '../../screens/Home/HomeScreen';
 import SearchScreen from '../../screens/Home/SearchSreen';
 import ExploreScreen from '../../screens/Home/ExploreScreen';
 import ProductDetailScreen from '../../screens/Home/ProductDetailScreen';
-import PaymentMethodScreen from '../../screens/Home/PaymentMethod';
+import PaymentMethodScreen from '../../screens/Home/PaymentMethodScreen';
 import ProfileScreen from '../../screens/Profile/ProfileScreen';
 import MyCartScreen from '../../screens/Home/MyCartScreen';
 MyCartScreen
