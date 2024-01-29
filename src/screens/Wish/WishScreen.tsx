@@ -73,7 +73,7 @@ const WishScreen: React.FC<PropsType> = props => {
     const _listHeader = () => {
         return (
             <Header
-                styleContainer={{ backgroundColor: color.White, marginTop: 24, marginHorizontal: -24 }}
+                styleContainer={{ backgroundColor: color.White, marginHorizontal: -24 }}
                 title=' WishList'
                 isCheck={true}
                 eventLeft={() => navigation.goBack()}
@@ -83,13 +83,13 @@ const WishScreen: React.FC<PropsType> = props => {
     return (
         <View style={styles.container}>
             <StatusBar
-                barStyle={'light-content'}
-                translucent={true}
+                barStyle={'dark-content'}
                 backgroundColor={'transparent'} />
             <FlatList
                 data={popularData}
                 renderItem={_itemPopular}
                 ListHeaderComponent={_listHeader}
+                showsVerticalScrollIndicator={false}
                 showsHorizontalScrollIndicator={true} />
         </View>
     )
