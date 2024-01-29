@@ -14,6 +14,9 @@ const HomeScreen: React.FC<PropsType> = props => {
     const _navigationShopnow = () => {
         navigation.navigate('ExploreScreen')
     }
+    const _navigationPaymentStatus = () => {
+        navigation.navigate('PaymentStatusScreen')
+    }
 
     return (
         <View>
@@ -25,6 +28,9 @@ const HomeScreen: React.FC<PropsType> = props => {
             <Button
                 onPress={_navigationShopnow}
                 title='Shop now' />
+            <Button
+                onPress={_navigationPaymentStatus}
+                title='Payment' />
         </View>
     )
 }

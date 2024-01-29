@@ -1,10 +1,11 @@
-import { FlatList, Image, StyleSheet, Text, TextInput, TouchableOpacity, View } from 'react-native'
+import { FlatList, Image, StatusBar, StyleSheet, Text, TextInput, TouchableOpacity, View } from 'react-native'
 import React, { useState } from 'react'
 import { NativeStackScreenProps } from '@react-navigation/native-stack';
 import { HomeStackParamList } from '../../components/navigation/HomeStack';
 import { color } from '../../themes/theme';
 import { ClockIcons, LeftIcons, MoreIconVertical, SearchIcons, StartIcons, XIcons } from '../../../assets/icons';
-import { CartIcons } from '../../../assets/icons/CartIcons';
+import Header from '../../components/Header/Header';
+import { Cart_Icon, IC_BACK } from '../../../assets/img';
 type PropsType = NativeStackScreenProps<HomeStackParamList, 'SearchScreen'>;
 
 //interface
@@ -37,7 +38,6 @@ const _itemHistorySearch = ({ item }: { item: historyProps }) => {
     )
 }
 //render item Popular
-
 const _itemPopular = ({ item }: { item: popularProps }) => {
     return (
         <View style={styles.cardPopular}>
@@ -69,15 +69,13 @@ const SearchScreen: React.FC<PropsType> = props => {
     const _listHeader = () => {
         return (
             <View>
-                <View style={styles.header}>
-                    <TouchableOpacity
-                        activeOpacity={0.7}
-                        onPress={navigation.goBack}>
-                        <LeftIcons />
-                    </TouchableOpacity>
-                    <Text style={styles.txtSearch}>Search</Text>
-                    <CartIcons />
-                </View>
+                <Header
+                    styleContainer={{ backgroundColor: color.White, marginTop: 24, marginHorizontal: -24 }}
+                    title='Search'
+                    isCheck={true}
+                    eventLeft={() => navigation.goBack()}
+                    iconLeft={IC_BACK}
+                    iconRight={Cart_Icon} />
                 <View style={styles.inputContainer}>
                     <TextInput
                         style={styles.searchInput}
@@ -86,7 +84,6 @@ const SearchScreen: React.FC<PropsType> = props => {
                     <View style={styles.iconSearch}>
                         <SearchIcons />
                     </View>
-
                 </View>
                 <View style={styles.historySearch}>
                     <Text style={styles.txtLastest}>Lastest search</Text>
@@ -100,7 +97,11 @@ const SearchScreen: React.FC<PropsType> = props => {
     }
     return (
         <View style={styles.container}>
-            <View style={styles.listPopular}>
+            <StatusBar
+                barStyle={'light-content'}
+                translucent={true}
+                backgroundColor={'transparent'} />
+            <View>
                 <FlatList
                     data={popularData}
                     renderItem={_itemPopular}
@@ -112,11 +113,7 @@ const SearchScreen: React.FC<PropsType> = props => {
 }
 
 export default SearchScreen
-
 const styles = StyleSheet.create({
-    listPopular: {
-        marginTop: 30
-    },
     txtNumberReviews: {
         fontSize: 14,
         color: 'black',
@@ -135,8 +132,7 @@ const styles = StyleSheet.create({
         fontSize: 14,
         lineHeight: 20,
         color: 'black',
-        fontWeight: '700',
-        fontFamily: 'DMSans-Regular',
+        fontFamily: 'DMSans-Bold',
         marginBottom: 12
     },
     txtNameProduct: {
@@ -180,7 +176,7 @@ const styles = StyleSheet.create({
     },
     cardPopular: {
         width: '100%',
-        height: 120,
+        height: 100,
         flexDirection: 'row'
     },
     txtHistory: {
@@ -221,7 +217,7 @@ const styles = StyleSheet.create({
         lineHeight: 20,
         fontWeight: '400',
         color: color.ColorInput,
-        fontFamily: 'DMSans-Regular'
+        fontFamily: 'DMSans-Regular',
     },
     txtSearch: {
         fontSize: 16,
@@ -236,19 +232,12 @@ const styles = StyleSheet.create({
         borderColor: color.ColorInput,
         borderWidth: 1,
         borderRadius: 10,
-        marginTop: 24,
-        justifyContent: 'center'
-    },
-    header: {
-        flexDirection: 'row',
-        justifyContent: 'space-between',
-        alignItems: 'center',
-        backgroundColor: color.White
+        justifyContent: 'center',
     },
     container: {
         flex: 1,
         backgroundColor: color.White,
-        paddingHorizontal: 24,
+        paddingHorizontal: 24
     }
 })
 

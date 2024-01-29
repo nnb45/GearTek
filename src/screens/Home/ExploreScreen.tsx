@@ -3,8 +3,9 @@ import React, { useState } from 'react'
 import { NativeStackScreenProps } from '@react-navigation/native-stack';
 import { HomeStackParamList } from '../../components/navigation/HomeStack';
 import { color } from '../../themes/theme';
-import { CartIcons, LeftIcons, MoreIconVertical, SliderIcons, StartIcons } from '../../../assets/icons';
-
+import { MoreIconVertical, SliderIcons, StartIcons } from '../../../assets/icons';
+import Header from '../../components/Header/Header';
+import { Cart_Icon, IC_BACK } from '../../../assets/img';
 type PropsType = NativeStackScreenProps<HomeStackParamList, 'ExploreScreen'>;
 
 //interface
@@ -46,43 +47,58 @@ const Flashlist: React.FC<Props> = ({ options }) => {
     );
 };
 
-//render item card product
-const _itemCardProduct = ({ item }: { item: ProductProps }) => {
-    return (
-        <View style={styles.cardProduct}>
-            <Image
-                style={styles.imgProduct}
-                source={{ uri: item.image }} />
-            <View style={styles.cardMoney}>
-                <Text style={styles.txtNameProduct} numberOfLines={1}
-                    ellipsizeMode='tail'>{item.name}</Text>
-                <Text style={styles.txtPriceProduct}>USD {item.price}</Text>
-                <View style={styles.cardRating}>
-                    <View style={styles.itemRating}>
-                        <StartIcons />
-                        <Text style={styles.txtRating}>{item.rating}</Text>
-                    </View>
-                    <Text style={styles.txtNumberReviews}>{item.review} Reviews</Text>
-                    <MoreIconVertical style={styles.iconMore} />
-                </View>
-            </View>
-        </View>
-    )
-}
 
 const ExploreScreen: React.FC<PropsType> = props => {
+    const [likedItems, setLikedItems] = useState<number[]>([]);
+    const handleLikeItem = (itemId: number) => {
+        if (likedItems.includes(itemId)) {
+            // Nếu mục đã được thích, loại bỏ khỏi mảng
+            setLikedItems(likedItems.filter((id) => id !== itemId));
+        } else {
+            // Nếu mục chưa được thích, thêm vào mảng
+            setLikedItems([...likedItems, itemId]);
+        }
+    };
+    //render item card product
+    const _itemCardProduct = ({ item }: { item: ProductProps }) => {
+        return (
+            <View style={styles.cardProduct}>
+                <Image
+                    style={styles.imgProduct}
+                    source={{ uri: item.image }} />
+                <View style={styles.cardMoney}>
+                    <Text style={styles.txtNameProduct} numberOfLines={1}
+                        ellipsizeMode='tail'>{item.name}</Text>
+                    <Text style={styles.txtPriceProduct}>USD {item.price}</Text>
+                    <View style={styles.cardRating}>
+                        <View style={styles.itemRating}>
+                            <StartIcons />
+                            <Text style={styles.txtRating}>{item.rating}</Text>
+                        </View>
+                        <Text style={styles.txtNumberReviews}>({item.review} Reviews)</Text>
+                        <TouchableOpacity
+                            activeOpacity={0.7}
+                            onPress={() => handleLikeItem(item.id)}>
+                            <Image
+                                style={styles.iconHeart}
+                                source={likedItems.includes(item.id) ? require('../../../assets/img/heart_ac.png') : require('../../../assets/img/heart.png')} />
+                        </TouchableOpacity>
+                    </View>
+                </View>
+            </View>
+        )
+    }
     //list header
     const _listHeader = () => {
         return (
             <View style={styles.information}>
-                <View style={styles.header}>
-                    <TouchableOpacity
-                        activeOpacity={0.7}
-                        onPress={navigation.goBack}>
-                        <LeftIcons />
-                    </TouchableOpacity>
-                    <CartIcons />
-                </View>
+                <Header
+                    styleContainer={{ backgroundColor: color.White, marginHorizontal: -24 }}
+                    title='Explore'
+                    isCheck={true}
+                    eventLeft={() => navigation.goBack()}
+                    iconLeft={IC_BACK}
+                    iconRight={Cart_Icon} />
                 <View style={styles.headerTitle}>
                     <Text style={styles.txtHeadphone}>Headphone</Text>
                     <Text style={styles.txtTma}>TMA Wireless</Text>
@@ -95,6 +111,7 @@ const ExploreScreen: React.FC<PropsType> = props => {
                     <Flashlist
                         options={options} />
                 </View>
+
             </View>
         )
     }
@@ -113,6 +130,7 @@ const ExploreScreen: React.FC<PropsType> = props => {
                     numColumns={2}
                     showsHorizontalScrollIndicator={true} />
             </View>
+
         </View>
     )
 }
@@ -120,20 +138,22 @@ const ExploreScreen: React.FC<PropsType> = props => {
 export default ExploreScreen
 
 const styles = StyleSheet.create({
-    iconMore: {
-        bottom: 4
+    iconHeart: {
+        marginRight: 4
     },
     txtNumberReviews: {
-        fontSize: 10,
+        fontSize: 12,
         color: 'black',
         fontWeight: '400',
         fontFamily: 'DMSans-Regular',
+        marginLeft: -10
     },
     txtRating: {
-        fontSize: 10,
+        fontSize: 12,
         color: 'black',
         fontWeight: '400',
         fontFamily: 'DMSans-Regular',
+        marginLeft: -4
     },
     txtPriceProduct: {
         fontSize: 12,
@@ -155,13 +175,13 @@ const styles = StyleSheet.create({
         marginBottom: 12
     },
     cardRating: {
-        width: '100%',
+        width: '95%',
         flexDirection: 'row',
         justifyContent: 'space-between',
         alignContent: 'center',
     },
     cardMoney: {
-        marginLeft: 10
+        marginLeft: 8
     },
     imgProduct: {
         width: 120,
@@ -230,7 +250,7 @@ const styles = StyleSheet.create({
         fontFamily: 'DMSans-Regular'
     },
     headerTitle: {
-        marginTop: 20
+        marginTop: 0
     },
     header: {
         flexDirection: 'row',
@@ -240,7 +260,7 @@ const styles = StyleSheet.create({
     },
     information: {
         width: '100%',
-        height: 220,
+        height: 240,
         backgroundColor: color.White,
         paddingHorizontal: 24,
     },
