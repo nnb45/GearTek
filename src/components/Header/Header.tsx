@@ -12,6 +12,7 @@ import {
 } from 'react-native';
 import React from 'react';
 import { color } from '../../themes/theme';
+import { Svg, SvgProps } from 'react-native-svg';
 interface HeaderProps {
     iconLeft?: ImageSourcePropType;
     title?: string;

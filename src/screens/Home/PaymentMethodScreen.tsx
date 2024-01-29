@@ -1,4 +1,4 @@
-import { ScrollView, StyleSheet, Text, View, TextInput, Image, Pressable } from 'react-native'
+import { ScrollView, StyleSheet, Text, View, TextInput, Image, Pressable, StatusBar } from 'react-native'
 import React from 'react'
 import { NativeStackScreenProps } from '@react-navigation/native-stack';
 import { HomeStackParamList } from '../../components/navigation/HomeStack';
@@ -16,7 +16,6 @@ const PaymentMethodScreen: React.FC<PropsType> = props => {
                 title='Payment method'
                 iconRight={IC_PLUS}
                 isCheck={true} />
-
             <Text style={styles.title}>Select existing card</Text>
             <View style={styles.grTxtInput}>
                 <Image source={IC_CARD} style={styles.icon} />

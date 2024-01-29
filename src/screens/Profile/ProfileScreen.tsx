@@ -10,7 +10,7 @@ import { AppContext } from '../../components/context/AppContext';
 type PropsType = NativeStackScreenProps<ProfileStackParamList, 'ProfileScreen'>;
 const ProfileScreen: React.FC<PropsType> = props => {
     const { navigation } = props;
-    const {setIsLogin} = useContext(AppContext)
+    const { setIsLogin } = useContext(AppContext)
     return (
         <SafeAreaView style={styles.container}>
             <StatusBar
@@ -44,8 +44,8 @@ const ProfileScreen: React.FC<PropsType> = props => {
                     </View>
                     <View style={styles.title}>
                         <Text style={styles.heading}>Personal</Text>
-                        <Text style={styles.body} onPress={()=> navigation.navigate('PaymentMethodScreen')}>Report a Bug</Text>
-                        <Text style={styles.body} onPress={()=> setIsLogin(false)}>Logout</Text>
+                        <Text style={styles.body} onPress={() => navigation.navigate('PaymentMethodScreen')}>Report a Bug</Text>
+                        <Text style={styles.body} onPress={() => setIsLogin(false)}>Logout</Text>
                     </View>
                 </View>
             </ScrollView>

@@ -3,6 +3,7 @@ import React, { useState } from 'react'
 import { NativeStackScreenProps } from '@react-navigation/native-stack';
 import { HomeStackParamList } from '../../components/navigation/HomeStack';
 import { color } from '../../themes/theme';
+import { IC_NEXT } from '../../../assets/img';
 
 
 type PropsType = NativeStackScreenProps<HomeStackParamList, 'HomeScreen'>;
@@ -203,10 +204,12 @@ const HomeScreen: React.FC<PropsType> = props => {
                             renderItem={renderSanpham2}
                         />
                     </View>
-
                 </View>
-
             </View>
+            <Pressable style={styles.btnAdd} onPress={() => navigation.navigate('PaymentStatusScreen')}>
+                <Text style={styles.txtAdd}>Select Payment Method</Text>
+                <Image source={IC_NEXT} style={{ width: 25, height: 25 }} />
+            </Pressable>
         </ScrollView>
     )
 }
@@ -351,6 +354,22 @@ const styles = StyleSheet.create({
     },
     renderButton: {
         fontFamily: 'DMSans-Medium',
+        fontSize: 14
+    },
+    btnAdd: {
+        alignItems: 'center',
+        flexDirection: 'row',
+        backgroundColor: color.Primary,
+        justifyContent: 'space-between',
+        borderRadius: 10,
+        height: 'auto',
+        margin: 24,
+        paddingVertical: 15,
+        paddingHorizontal: 30
+    },
+    txtAdd: {
+        color: color.White,
+        fontFamily: 'DMSans-Bold',
         fontSize: 14
     }
 })
