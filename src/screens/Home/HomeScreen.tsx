@@ -55,7 +55,7 @@ const HomeScreen: React.FC<PropsType> = props => {
         return (
             <View style={{ marginRight: 10, marginVertical: 25 }}>
                 <Text style={{
-                    color: id == selectedIndex ? 'black' : 'gray',
+                    color: id == selectedIndex ? 'white' : 'gray',
                     backgroundColor: id == selectedIndex ? color.Primary : color.GreyLight2,
                     fontSize: 14,
                     fontFamily: 'DMSans-Regular',
@@ -66,8 +66,6 @@ const HomeScreen: React.FC<PropsType> = props => {
                     onPress={() => {
                         setselectedIndex(id)
                     }}>{name}</Text>
-
-
             </View>
         )
     }
@@ -96,7 +94,6 @@ const HomeScreen: React.FC<PropsType> = props => {
     }
 
 
-
     const renderSanpham2 = ({ item }: { item: SanPham2 }) => {
         const { id, name, avatar, price } = item
         return (
@@ -121,24 +118,10 @@ const HomeScreen: React.FC<PropsType> = props => {
 
 
     return (
-        <ScrollView showsVerticalScrollIndicator={false}>
-
-
+        <ScrollView style={styles.containerAll} showsVerticalScrollIndicator={false}>
             <View style={styles.container}>
-                {/* <Text>HomeScreen</Text> */}
-                {/* <Button
-                onPress={_navigationSearch}
-                title='search' />
-
-            <Button
-                onPress={_navigationShopnow}
-                title='Shop now' /> */}
                 <View style={styles.flex3}>
-
-
-
                     <View style={styles.row}>
-
                         <View style={styles.rowlogo}>
                             <Image
                                 source={require('../../../assets/img/logo.png')}
@@ -153,25 +136,21 @@ const HomeScreen: React.FC<PropsType> = props => {
                                 style={styles.avatar}
                             />
                         </Pressable>
-
-
                     </View>
-
                     <View>
                         <Text style={styles.hi}>
                             Hi, Andrea
                         </Text>
-
                         <Text style={styles.today}>
                             What are you looking for today?
                         </Text>
                     </View>
-
                     <View style={styles.inputcontainer}>
                         <View style={styles.top}>
                             <TextInput
                                 style={styles.input}
-                                placeholder='Search headphone' />
+                                placeholder='Search headphone'
+                                placeholderTextColor={color.Grey} />
 
                             <TouchableOpacity
                                 onPress={_search}
@@ -236,6 +215,10 @@ const HomeScreen: React.FC<PropsType> = props => {
 export default HomeScreen
 
 const styles = StyleSheet.create({
+    containerAll: {
+        flex: 1,
+        backgroundColor: color.White
+    },
     infor: {
         fontSize: 13,
         fontFamily: 'DMSans-Bold',
@@ -284,13 +267,14 @@ const styles = StyleSheet.create({
     },
     flex8: {
         flex: 8,
-        backgroundColor: color.GreyLight2,
-        borderRadius: 25,
+        backgroundColor: color.GreyLight1,
+        borderTopRightRadius: 25,
+        borderTopLeftRadius: 25,
         paddingHorizontal: 24
     },
     flex3: {
         flex: 3,
-        padding: 15,
+        padding: 24,
     },
     searchImage: {
         position: 'absolute',
@@ -307,12 +291,14 @@ const styles = StyleSheet.create({
     input: {
         width: '100%',
         height: 45,
-        borderRadius: 8,
-        paddingHorizontal: 17,
-        paddingVertical: 11,
+        borderRadius: 10,
+        paddingHorizontal: 15,
+        paddingVertical: 12.5,
         paddingLeft: 40,
-        fontFamily: 'DMSans-Medium',
+        fontFamily: 'DMSans-Regular',
         borderWidth: 1,
+        borderColor: color.Grey,
+        alignItems: 'center'
 
     },
     inputcontainer: {
@@ -344,6 +330,7 @@ const styles = StyleSheet.create({
         height: 20
     },
     row: {
+        marginTop: 6,
         flexDirection: 'row',
         justifyContent: 'space-between',
         alignItems: 'center'
