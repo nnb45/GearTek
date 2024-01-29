@@ -65,14 +65,16 @@ const PaymentMethodScreen: React.FC<PropsType> = props => {
                     placeholderTextColor={color.Grey}
                     style={styles.textInputInfo} />
             </View>
-            <View style={styles.totalPrice}>
-                <Text style={styles.body}>Total Price</Text>
-                <Text style={styles.body}>USD 313</Text>
+            <View style={styles.confirm}>
+                <View style={styles.totalPrice}>
+                    <Text style={styles.body}>Total Price</Text>
+                    <Text style={styles.body}>USD 313</Text>
+                </View>
+                <Pressable style={styles.btnAdd}>
+                    <Text style={styles.txtAdd}>Select Payment Method</Text>
+                    <Image source={IC_NEXT} style={{ width: 25, height: 25 }} />
+                </Pressable>
             </View>
-            <Pressable style={styles.btnAdd}>
-                <Text style={styles.txtAdd}>Select Payment Method</Text>
-                <Image source={IC_NEXT} style={{width: 25, height: 25}} />
-            </Pressable>
         </View>
     )
 }
@@ -161,10 +163,13 @@ const styles = StyleSheet.create({
         marginTop: 8,
     },
     cardholder: {
+        flex: 1,
         marginHorizontal: 24
     },
+    confirm: {
+        flex: 0
+    },
     totalPrice: {
-        marginTop: 80,
         flexDirection: 'row',
         gap: 10,
         marginHorizontal: 24,
@@ -181,7 +186,7 @@ const styles = StyleSheet.create({
         backgroundColor: color.Primary,
         justifyContent: 'space-between',
         borderRadius: 10,
-        height: 'auto', 
+        height: 'auto',
         margin: 24,
         paddingVertical: 15,
         paddingHorizontal: 30
