@@ -4,8 +4,10 @@ import HomeScreen from '../../screens/Home/HomeScreen';
 import SearchScreen from '../../screens/Home/SearchSreen';
 import ExploreScreen from '../../screens/Home/ExploreScreen';
 import ProductDetailScreen from '../../screens/Home/ProductDetailScreen';
-import PaymentMethodScreen from '../../screens/Home/PaymentMethod';
+import PaymentMethodScreen from '../../screens/Home/PaymentMethodScreen';
 import ProfileScreen from '../../screens/Profile/ProfileScreen';
+import MyCartScreen from '../../screens/Home/MyCartScreen';
+MyCartScreen
 
 type HomeScreenProps = {};
 type SearchScreenProps = {};
@@ -40,6 +42,7 @@ const HomeStack = () => {
             <Stack.Screen name="ProfileScreen" component={ProfileScreen} />
             <Stack.Screen name="ProductDetailScreen" component={ProductDetailScreen} />
             <Stack.Screen name="PaymentMethodScreen" component={PaymentMethodScreen} />
+            <Stack.Screen name="MyCartScreen" component={MyCartScreen} />
         </Stack.Navigator >
     )
 }

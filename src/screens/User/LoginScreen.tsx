@@ -1,27 +1,40 @@
-import { StyleSheet, Text, View, TouchableOpacity, TextInput, Image, ImageBackground } from 'react-native'
-import React, { useState } from 'react'
+import { StyleSheet, Text, View, TouchableOpacity, TextInput, Image, ImageBackground, StatusBar } from 'react-native'
+import React, { useContext, useState } from 'react'
 import { NativeStackScreenProps } from '@react-navigation/native-stack';
 import { LoginStackParamList } from '../../components/navigation/LoginStack';
 import { color } from '../../themes/theme';
-import { KeyboardAwareScrollView } from 'react-native-keyboard-aware-scroll-view';
-
+import { AppContext } from '../../components/context/AppContext';
 
 
 type PropsType = NativeStackScreenProps<LoginStackParamList, 'LoginScreen'>;
 const LoginScreen: React.FC<PropsType> = props => {
     const [passwork, setPasswork] = useState(true)
 
-    
-
+    //handle naviagtion regster
+    const _navigationRegister = () => {
+        navigation.navigate('RegisterScreen')
+    }
+    const { setIsLogin } = useContext(AppContext);
+    const _handleLogin = () => {
+        console.log('Login Success!!!!');
+        setIsLogin(true);
+    }
+    const { navigation } = props
     return (
+
+
+
         <ImageBackground
-            source={require('../../../assets/img/TMA-2_2.png')}
+            source={require('../../../assets/img/imagenen.png')}
             style={styles.anhnen}>
 
             <View style={styles.container}>
-
+                <StatusBar
+                    barStyle={'light-content'}
+                    translucent={true}
+                backgroundColor={'transparent'}/>
                 <View style={styles.containerText}>
-                    <Text style={styles.geartTek}>GeartTek</Text>
+                    <Text style={styles.geartTek}>GearTek</Text>
                     <Text style={styles.text}>It's modular and designal to last</Text>
                 </View>
 
@@ -29,14 +42,14 @@ const LoginScreen: React.FC<PropsType> = props => {
                     <View style={styles.way}>
                         <TextInput
                             style={styles.input}
-                            placeholder='Email address' />
+                            placeholder='Email address'
+                            placeholderTextColor={color.Grey} />
 
                         <TouchableOpacity
                             style={styles.gmailImage}>
                             <Image
-                                source={require('../../../assets/img/TMA-2_2.png')}
+                                source={require('../../../assets/img/mail.png')}
                                 style={styles.gmailicon} />
-
                         </TouchableOpacity>
                     </View>
 
@@ -44,37 +57,35 @@ const LoginScreen: React.FC<PropsType> = props => {
                     <View style={styles.way}>
                         <TextInput
                             style={styles.input}
-                            placeholder='Passwork'
+                            placeholder='Password'
+                            placeholderTextColor={color.Grey}
                             secureTextEntry={passwork} />
 
                         <TouchableOpacity
                             style={styles.gmailImage}>
                             <Image
-                                source={require('../../../assets/img/TMA-2_2.png')}
+                                source={require('../../../assets/img/lock.png')}
                                 style={styles.gmailicon} />
-
                         </TouchableOpacity>
                     </View>
 
+                    <Text style={styles.forgot}>Forgot Password</Text>
 
-                    <Text style={styles.forgot}>Forgot Passwork</Text>
 
-
-                    <TouchableOpacity style={styles.button}>
+                    <TouchableOpacity style={styles.button} onPress={_handleLogin}>
                         <Text style={styles.buttonLabel}>Sign In</Text>
                     </TouchableOpacity>
 
                     <View style={styles.here}>
                         <Text style={styles.account}>Didn't have any account?{' '}</Text>
-                        <TouchableOpacity >
+                        <TouchableOpacity onPress={_navigationRegister}>
                             <Text style={styles.signup}>Sign Up here</Text>
                         </TouchableOpacity>
                     </View>
-
                 </View>
-
             </View>
         </ImageBackground>
+
     )
 }
 
@@ -83,21 +94,20 @@ export default LoginScreen
 
 const styles = StyleSheet.create({
     gmailicon: {
-        width: 22,
-        height: 22,
+        width: 20,
+        height: 20,
     },
     gmailImage: {
         width: 30,
         height: 18,
         position: 'absolute',
-        top: 13.5,
-        left: 8
+        paddingVertical: 15,
+        marginStart: 15
     },
     signup: {
         textDecorationLine: 'underline',
         color: color.Primary,
         fontFamily: 'DMSans-Medium'
-
     },
     here: {
         flexDirection: 'row',
@@ -110,7 +120,6 @@ const styles = StyleSheet.create({
         textAlign: 'center',
         color: color.White,
         fontFamily: 'DMSans-Medium'
-
     },
     buttonLabel: {
         color: color.White,
@@ -132,24 +141,25 @@ const styles = StyleSheet.create({
         textAlign: 'center',
         color: color.White,
         fontFamily: 'DMSans-Medium'
-
     },
     way: {
-        marginBottom: 25
+        marginBottom: 25,
+        color: color.Grey
     },
     input: {
         width: '100%',
-        height: 48,
+        height: 50,
         backgroundColor: color.White,
         borderRadius: 8,
         paddingHorizontal: 17,
+        justifyContent: 'center',
         paddingVertical: 11,
         paddingLeft: 40,
-        fontFamily: 'DMSans-Medium'
+        fontFamily: 'DMSans-Regular',
+        color: color.Grey
     },
     inputcontainer: {
         width: '100%',
-
     },
     text: {
         color: color.White,
@@ -165,16 +175,14 @@ const styles = StyleSheet.create({
         width: '100%',
         height: '100%',
         padding: 15,
-  
         alignItems: 'center',
         justifyContent: 'space-between'
     },
     containerText: {
         paddingVertical: 90,
         alignItems: 'center',
-
     },
-    anhnen:{
+    anhnen: {
         flex: 1
     }
 })
