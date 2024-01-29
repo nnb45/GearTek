@@ -17,13 +17,10 @@ const RegisterScreen: React.FC<PropsType> = props => {
     const { navigation } = props
 
     return (
-        <KeyboardAwareScrollView>
-
-
-            <ImageBackground
-                source={require('../../../assets/img/imagenen.png')}
-                style={styles.anhnen}>
-
+        <ImageBackground
+            source={require('../../../assets/img/imagenen.png')}
+            style={styles.anhnen}>
+            <KeyboardAwareScrollView>
                 <View style={styles.container}>
                     <StatusBar
                         barStyle={'light-content'}
@@ -65,10 +62,7 @@ const RegisterScreen: React.FC<PropsType> = props => {
                             </TouchableOpacity>
                         </View>
 
-
-                        <TouchableOpacity style={styles.button}
-                      
-                        >
+                        <TouchableOpacity style={styles.button}>
                             <Text style={styles.buttonLabel}>Sign Up</Text>
                         </TouchableOpacity>
 
@@ -86,20 +80,17 @@ const RegisterScreen: React.FC<PropsType> = props => {
                             </TouchableOpacity>
                         </View>
 
-
                         <View style={styles.here}>
                             <Text style={styles.account}>If you have an account?{' '}</Text>
                             <TouchableOpacity
-                            onPress={_navigationLoginScreen}
-                            >
+                                onPress={_navigationLoginScreen}>
                                 <Text style={styles.signup}>Sign Up here</Text>
                             </TouchableOpacity>
                         </View>
-
                     </View>
                 </View>
-            </ImageBackground>
-        </KeyboardAwareScrollView>
+            </KeyboardAwareScrollView>
+        </ImageBackground>
     )
 }
 
@@ -107,21 +98,21 @@ const RegisterScreen: React.FC<PropsType> = props => {
 export default RegisterScreen
 
 const styles = StyleSheet.create({
-    google:{
+    google: {
         width: 20,
         height: 20,
         margin: 15,
         marginHorizontal: 20,
         marginVertical: 17,
     },
-    fake:{
+    fake: {
         width: 12,
         height: 25,
         marginHorizontal: 25,
         marginVertical: 17,
-        
+
     },
-    icon:{
+    icon: {
         backgroundColor: color.White,
         justifyContent: 'center',
         margin: 10,
