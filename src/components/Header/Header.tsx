@@ -127,6 +127,7 @@ const _styles = StyleSheet.create({
         fontFamily: 'DMSans-Bold',
         fontSize: 16,
         color: color.Default,
+        alignSelf: 'center',
         textAlign: 'center',
         lineHeight: 20,
         letterSpacing: 0.2,

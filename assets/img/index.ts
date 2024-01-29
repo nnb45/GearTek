@@ -1,3 +1,13 @@
 export const IC_BACK = require('../img/back.png')
-export const AVATAR = require('../img/avatar.png')
 export const Cart_Icon = require('../img/Cart_Icon.png')
+export const IC_NEXT = require('../img/next.png')
+export const IC_CARD = require('../img/Card.png')
+export const VISA = require('../img/visa.png')
+export const MASTERCARD = require('../img/mastercard.png')
+export const IC_PLUS = require('../img/plus.png');
+export const IC_MINUS = require('../img/minus.png');
+export const AVATAR = require('../img/avatar.png')
+export const IMG_Product = require('../img/TMA-2.png')
+export const CABLE = require('../img/cable.png')
+export const BIN = require('../img/bin.png')
+export const DELETE = require('../img/delete.png')
