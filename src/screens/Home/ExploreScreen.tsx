@@ -5,7 +5,7 @@ import { HomeStackParamList } from '../../components/navigation/HomeStack';
 import { color } from '../../themes/theme';
 import { MoreIconVertical, SliderIcons, StartIcons } from '../../../assets/icons';
 import Header from '../../components/Header/Header';
-import { Cart_Icon, IC_BACK } from '../../../assets/img';
+import { Cart_Icon, IC_BACK, IC_CART } from '../../../assets/img';
 type PropsType = NativeStackScreenProps<HomeStackParamList, 'ExploreScreen'>;
 
 //interface
@@ -98,7 +98,7 @@ const ExploreScreen: React.FC<PropsType> = props => {
                     isCheck={true}
                     eventLeft={() => navigation.goBack()}
                     iconLeft={IC_BACK}
-                    iconRight={Cart_Icon} />
+                    iconRight={IC_CART} />
                 <View style={styles.headerTitle}>
                     <Text style={styles.txtHeadphone}>Headphone</Text>
                     <Text style={styles.txtTma}>TMA Wireless</Text>
@@ -119,8 +119,7 @@ const ExploreScreen: React.FC<PropsType> = props => {
     return (
         <View style={styles.container}>
             <StatusBar
-                barStyle={'light-content'}
-                translucent={true}
+                barStyle={'dark-content'}
                 backgroundColor={'transparent'} />
             <View style={styles.containerProduct}>
                 <FlatList
@@ -196,7 +195,9 @@ const styles = StyleSheet.create({
         borderRadius: 15,
         backgroundColor: color.White,
         marginLeft: 26,
-        marginVertical: 14
+        marginVertical: 14,
+        alignItems: 'center',
+        borderWidth: 1
     },
     containerProduct: {
         flex: 1,
@@ -239,15 +240,13 @@ const styles = StyleSheet.create({
         fontSize: 24,
         lineHeight: 32,
         color: 'black',
-        fontWeight: '700',
-        fontFamily: 'DMSans-Regular',
+        fontFamily: 'DMSans-Bold',
         marginTop: 12
     },
     txtHeadphone: {
         fontSize: 16,
         lineHeight: 20,
         color: 'black',
-        fontWeight: '400',
         fontFamily: 'DMSans-Regular'
     },
     headerTitle: {

@@ -1,15 +1,18 @@
 import { Image, Pressable, StatusBar, StyleSheet, Text, TouchableOpacity, View } from 'react-native'
 import React from 'react'
 import { color } from '../../themes/theme'
+import { NativeStackScreenProps } from '@react-navigation/native-stack';
+import { HomeStackParamList } from '../../components/navigation/HomeStack';
 
-const PaymentStatusScreen = () => {
+type PropsType = NativeStackScreenProps<HomeStackParamList, 'PaymentStatusScreen'>;
+
+const PaymentStatusScreen: React.FC<PropsType> = props => {
    return (
       <View style={styles.container}>
          <StatusBar
-            barStyle={'light-content'}
-            translucent={true}
+            barStyle={'dark-content'}
             backgroundColor={'transparent'} />
-         <View style={styles.imgStatus}>
+         <View style={styles.imgSuccess}>
             <Image
                style={styles.imgStatus}
                source={require('../../../assets/img/paymentStatus.png')} />
@@ -31,6 +34,13 @@ const PaymentStatusScreen = () => {
 export default PaymentStatusScreen
 
 const styles = StyleSheet.create({
+   container: {
+      flex: 1,
+      justifyContent: 'center',
+      alignContent: 'center',
+      backgroundColor: color.White,
+      paddingHorizontal: 24
+   },
    txtBack: {
       fontSize: 16,
       fontFamily: 'DMSans-Bold',
@@ -55,7 +65,7 @@ const styles = StyleSheet.create({
    },
    txtThanks: {
       fontSize: 16,
-      fontFamily: 'DMSans-Light',
+      fontFamily: 'DMSans-Regular',
       color: 'gray',
       textAlign: 'center',
       marginTop: 12
@@ -65,15 +75,18 @@ const styles = StyleSheet.create({
       fontFamily: 'DMSans-Bold',
       color: 'black',
       textAlign: 'center',
-      marginTop: 48
+      marginTop: 70
    },
    imgStatus: {
-      marginTop: 100,
+      height: 212,
+      width: 212,
+      justifyContent: 'center',
+      alignSelf: 'center',
+      alignItems: 'center',
+   },
+   imgSuccess: {
+      justifyContent: 'center',
+      alignSelf: 'center',
       alignItems: 'center'
    },
-   container: {
-      flex: 1,
-      backgroundColor: color.White,
-      paddingHorizontal: 24
-   }
 })

@@ -1,4 +1,4 @@
-import { Image, SafeAreaView, ScrollView, StyleSheet, Text, View } from 'react-native'
+import { Image, SafeAreaView, ScrollView, StatusBar, StyleSheet, Text, View } from 'react-native'
 import React, { useContext } from 'react'
 import { NativeStackScreenProps } from '@react-navigation/native-stack';
 import { ProfileStackParamList } from '../../components/navigation/ProfileStack';
@@ -10,9 +10,12 @@ import { AppContext } from '../../components/context/AppContext';
 type PropsType = NativeStackScreenProps<ProfileStackParamList, 'ProfileScreen'>;
 const ProfileScreen: React.FC<PropsType> = props => {
     const { navigation } = props;
-    const {setIsLogin} = useContext(AppContext)
+    const { setIsLogin } = useContext(AppContext)
     return (
         <SafeAreaView style={styles.container}>
+            <StatusBar
+                barStyle={'dark-content'}
+                backgroundColor={'transparent'} />
             <Header
                 styleContainer={{ backgroundColor: color.White }}
                 title='Profile'
@@ -41,8 +44,8 @@ const ProfileScreen: React.FC<PropsType> = props => {
                     </View>
                     <View style={styles.title}>
                         <Text style={styles.heading}>Personal</Text>
-                        <Text style={styles.body}>Report a Bug</Text>
-                        <Text style={styles.body} onPress={()=> setIsLogin(false)}>Logout</Text>
+                        <Text style={styles.body} onPress={() => navigation.navigate('PaymentMethodScreen')}>Report a Bug</Text>
+                        <Text style={styles.body} onPress={() => setIsLogin(false)}>Logout</Text>
                     </View>
                 </View>
             </ScrollView>
