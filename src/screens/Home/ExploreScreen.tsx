@@ -93,7 +93,7 @@ const ExploreScreen: React.FC<PropsType> = props => {
         return (
             <View style={styles.information}>
                 <Header
-                    styleContainer={{ backgroundColor: color.White, marginHorizontal: -24 }}
+                    styleContainer={{ backgroundColor: color.White, marginHorizontal: -24, marginTop: -20 }}
                     title='Explore'
                     isCheck={true}
                     eventLeft={() => navigation.goBack()}
@@ -197,7 +197,6 @@ const styles = StyleSheet.create({
         marginLeft: 26,
         marginVertical: 14,
         alignItems: 'center',
-        borderWidth: 1
     },
     containerProduct: {
         flex: 1,
