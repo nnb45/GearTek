@@ -19,8 +19,10 @@ interface popularProps {
 }
 
 const WishScreen: React.FC<PropsType> = props => {
-
     const { navigation } = props;
+    const _handleCart = () => {
+        navigation.navigate('MyCartScreen');
+    }
 
     const [likedItems, setLikedItems] = useState<number[]>([]);
     const handleLikeItem = (itemId: number) => {
@@ -53,7 +55,7 @@ const WishScreen: React.FC<PropsType> = props => {
                         <Text style={styles.txtNumberReviews}>({item.review} Reviews)</Text>
                     </View>
                     <View style={styles.options}>
-                        <Pressable style={styles.btnAdd}>
+                        <Pressable style={styles.btnAdd} onPress={_handleCart}>
                             <Text style={styles.txtAdd}>Add to cart</Text>
                         </Pressable>
                         <TouchableOpacity

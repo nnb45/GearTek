@@ -7,6 +7,10 @@ import { HomeStackParamList } from '../../components/navigation/HomeStack';
 type PropsType = NativeStackScreenProps<HomeStackParamList, 'PaymentStatusScreen'>;
 
 const PaymentStatusScreen: React.FC<PropsType> = props => {
+   const { navigation } = props;
+   const _handleReceipt = () => {
+      navigation.navigate('ReceiptScreen')
+   }
    return (
       <View style={styles.container}>
          <StatusBar
@@ -21,7 +25,7 @@ const PaymentStatusScreen: React.FC<PropsType> = props => {
             <Text style={styles.txtPayment}>Payment successful!!!!</Text>
             <Text style={styles.txtThanks}>Thanks for your order</Text>
          </View>
-         <Pressable style={styles.btnView}>
+         <Pressable style={styles.btnView} onPress={_handleReceipt}>
             <Text style={styles.txtView}>View Reciept</Text>
          </Pressable>
          <TouchableOpacity>

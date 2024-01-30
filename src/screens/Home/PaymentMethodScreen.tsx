@@ -8,7 +8,10 @@ import { IC_BACK, IC_CARD, IC_NEXT, IC_PLUS, MASTERCARD, VISA } from '../../../a
 
 type PropsType = NativeStackScreenProps<HomeStackParamList, 'PaymentMethodScreen'>;
 const PaymentMethodScreen: React.FC<PropsType> = props => {
-
+    const { navigation } = props;
+    const _handleSelect = () => {
+        navigation.navigate('ReceiptScreen')
+    }
     return (
         <View style={styles.container}>
             <Header
@@ -69,7 +72,7 @@ const PaymentMethodScreen: React.FC<PropsType> = props => {
                     <Text style={styles.body}>Total Price</Text>
                     <Text style={styles.body}>USD 313</Text>
                 </View>
-                <Pressable style={styles.btnAdd}>
+                <Pressable style={styles.btnAdd} onPress={_handleSelect}>
                     <Text style={styles.txtAdd}>Select Payment Method</Text>
                     <Image source={IC_NEXT} style={{ width: 25, height: 25 }} />
                 </Pressable>
@@ -163,10 +166,10 @@ const styles = StyleSheet.create({
     },
     cardholder: {
         flex: 1,
-        marginHorizontal: 24
+        marginHorizontal: 24,
     },
     confirm: {
-        flex: 0
+        flex: 0,
     },
     totalPrice: {
         flexDirection: 'row',

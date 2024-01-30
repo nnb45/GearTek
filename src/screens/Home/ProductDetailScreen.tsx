@@ -21,6 +21,9 @@ interface Product2 {
 type PropsType = NativeStackScreenProps<HomeStackParamList, 'ProductDetailScreen'>;
 const ProductDetailScreen: React.FC<PropsType> = props => {
     const { navigation } = props;
+    const _handleCart = () => {
+        navigation.navigate('MyCartScreen');
+    }
     const data: Product[] = [
         {
             id: 1,
@@ -77,8 +80,7 @@ const ProductDetailScreen: React.FC<PropsType> = props => {
             <StatusBar
                 barStyle={'dark-content'}
                 backgroundColor={'transparent'} />
-            <ScrollView showsVerticalScrollIndicator={false}
-                nestedScrollEnabled={true}>
+            <ScrollView showsVerticalScrollIndicator={false}>
                 <Header
                     title='Details'
                     iconLeft={IC_BACK}
@@ -202,7 +204,7 @@ const ProductDetailScreen: React.FC<PropsType> = props => {
                     />
                 </View>
                 <View style={{ marginVertical: 20, borderRadius: 10, height: 50 }}>
-                    <Pressable style={styles.btnAdd}>
+                    <Pressable style={styles.btnAdd} onPress={_handleCart}>
                         <Text style={styles.txtAdd}>Add to cart</Text>
                     </Pressable>
                 </View>

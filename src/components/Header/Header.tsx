@@ -87,7 +87,6 @@ const Header: React.FC<HeaderProps> = ({
                 {renderTextCenter()}
                 {renderIconRight()}
             </View>
-
         </View >
     );
 };
@@ -141,7 +140,7 @@ const _styles = StyleSheet.create({
         alignItems: 'center',
         flexDirection: 'column',
         justifyContent: 'center',
-        width: 'auto'
+        width: 'auto',
     },
 });
 export default Header;

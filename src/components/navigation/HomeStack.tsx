@@ -7,7 +7,8 @@ import ProductDetailScreen from '../../screens/Home/ProductDetailScreen';
 import PaymentMethodScreen from '../../screens/Home/PaymentMethodScreen';
 import ProfileScreen from '../../screens/Profile/ProfileScreen';
 import PaymentStatusScreen from '../../screens/Home/PaymentStatusScreen';
-import MyCartScreen from '../../screens/Home/MyCartScreen';
+import MyCartScreen from '../../screens/MyCart/MyCartScreen';
+import ReceiptScreen from '../../screens/Home/ReceiptScreen';
 
 
 type HomeScreenProps = {};
@@ -18,6 +19,8 @@ type ProfileScreenProps = {};
 type MyCartScreenProps = {};
 type PaymentMethodScreenProps = {};
 type PaymentStatusScreenProps = {};
+type ReceiptScreenProps = {};
+
 export type HomeStackParamList = {
     HomeScreen: HomeScreenProps | undefined;
     SearchScreen: SearchScreenProps | undefined;
@@ -27,6 +30,7 @@ export type HomeStackParamList = {
     MyCartScreen: MyCartScreenProps | undefined;
     PaymentMethodScreen: PaymentMethodScreenProps | undefined;
     PaymentStatusScreen: PaymentStatusScreenProps | undefined;
+    ReceiptScreen: ReceiptScreenProps | undefined;
 };
 
 const Stack = createNativeStackNavigator<HomeStackParamList>();
@@ -45,6 +49,7 @@ const HomeStack = () => {
             <Stack.Screen name="ProductDetailScreen" component={ProductDetailScreen} />
             <Stack.Screen name="PaymentMethodScreen" component={PaymentMethodScreen} />
             <Stack.Screen name="PaymentStatusScreen" component={PaymentStatusScreen} />
+            <Stack.Screen name="ReceiptScreen" component={ReceiptScreen} />
             <Stack.Screen name="MyCartScreen" component={MyCartScreen} />
         </Stack.Navigator >
     )

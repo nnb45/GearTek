@@ -196,7 +196,6 @@ const styles = StyleSheet.create({
         marginLeft: 26,
         marginVertical: 14,
         alignItems: 'center',
-        borderWidth: 1
     },
     containerProduct: {
         flex: 1,
