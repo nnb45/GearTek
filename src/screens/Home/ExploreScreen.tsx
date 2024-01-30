@@ -139,14 +139,14 @@ export default ExploreScreen
 
 const styles = StyleSheet.create({
     iconHeart: {
-        marginRight: 4
+        // marginRight: 4
     },
     txtNumberReviews: {
         fontSize: 12,
         color: 'black',
         fontWeight: '400',
         fontFamily: 'DMSans-Regular',
-        marginLeft: -10
+        marginLeft: -4
     },
     txtRating: {
         fontSize: 12,
@@ -181,7 +181,8 @@ const styles = StyleSheet.create({
         alignContent: 'center',
     },
     cardMoney: {
-        marginLeft: 8
+        paddingHorizontal: 10,
+        paddingVertical: 15
     },
     imgProduct: {
         width: 120,
@@ -191,7 +192,7 @@ const styles = StyleSheet.create({
     cardProduct: {
         // width: 160,
         width: Dimensions.get('screen').width * 0.4,
-        height: 200,
+        height: 220,
         borderRadius: 15,
         backgroundColor: color.White,
         marginLeft: 26,
