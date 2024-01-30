@@ -1,4 +1,4 @@
-import { StyleSheet, Text, View, Image, TouchableOpacity, TouchableHighlight, Alert, Pressable } from 'react-native';
+import { StyleSheet, Text, View, Image, TouchableOpacity, TouchableHighlight, Alert, Pressable, FlatList, StatusBar } from 'react-native';
 import React, { useState } from 'react';
 import { NativeStackScreenProps } from '@react-navigation/native-stack';
 import { HomeStackParamList } from '../../components/navigation/HomeStack';
@@ -7,54 +7,47 @@ import Header from '../../components/Header/Header';
 import { BIN, DELETE, IC_BACK, IC_MINUS, IC_NEXT, IC_PLUS } from '../../../assets/img';
 
 type PropsType = NativeStackScreenProps<HomeStackParamList, 'MyCartScreen'>;
+
+interface cartProps {
+    id: number,
+    name: string,
+    image: string,
+    price: number,
+}
 const MyCartScreen: React.FC<PropsType> = props => {
+
+
     const [quantity, setQuantity] = useState<number>(1);
 
-    return (
-        <View style={styles.container}>
-            <Header
-                title='My Cart'
-                iconLeft={IC_BACK}
-                iconRight={BIN}
-                isCheck={true} />
+    const decreaseQuantity = () => {
+        if (quantity > 1) {
+            setQuantity(quantity - 1);
+        }
+    };
+
+    const increaseQuantity = () => {
+        setQuantity(quantity + 1);
+    };
+    const { navigation } = props
+    //item cart
+    const _itemCart = ({ item }: { item: cartProps }) => {
+        return (
             <View style={styles.item}>
                 <View style={styles.itemImage}>
                     <Image
-                        source={require('../../../assets/img/APTX.png')}
+                        source={{ uri: item.image }}
                         style={styles.image}
                     />
                     <View style={styles.itemInfo}>
-                        <Text style={styles.name}>TMA-2 Comfort Wireless</Text>
-                        <Text style={styles.price}>USD 270</Text>
+                        <Text style={styles.name}>{item.name}</Text>
+                        <Text style={styles.price}>{item.price} USD</Text>
                         <View style={styles.itemOption}>
                             <View style={styles.quantityControl}>
-                                <TouchableOpacity style={styles.quantityButton} onPress={() => (quantity > 1 ? setQuantity(quantity - 1) : setQuantity(1))}>
+                                <TouchableOpacity style={styles.quantityButton} onPress={decreaseQuantity}>
                                     <Image style={styles.quantityIcon} source={IC_MINUS} />
                                 </TouchableOpacity>
                                 <Text style={styles.quantity}>{quantity}</Text>
-                                <TouchableOpacity style={styles.quantityButton} onPress={() => setQuantity(quantity + 1)}>
-                                    <Image style={styles.quantityIcon} source={IC_PLUS} />
-                                </TouchableOpacity>
-                            </View>
-                            <Image source={DELETE} style={styles.quantityIcon} />
-                        </View>
-                    </View>
-                </View>
-                <View style={styles.itemImage}>
-                    <Image
-                        source={require('../../../assets/img/APTX.png')}
-                        style={styles.image}
-                    />
-                    <View style={styles.itemInfo}>
-                        <Text style={styles.name}>TMA-2 Comfort Wireless</Text>
-                        <Text style={styles.price}>USD 270</Text>
-                        <View style={styles.itemOption}>
-                            <View style={styles.quantityControl}>
-                                <TouchableOpacity style={styles.quantityButton} onPress={() => (quantity > 1 ? setQuantity(quantity - 1) : setQuantity(1))}>
-                                    <Image style={styles.quantityIcon} source={IC_MINUS} />
-                                </TouchableOpacity>
-                                <Text style={styles.quantity}>{quantity}</Text>
-                                <TouchableOpacity style={styles.quantityButton} onPress={() => setQuantity(quantity + 1)}>
+                                <TouchableOpacity style={styles.quantityButton} onPress={increaseQuantity}>
                                     <Image style={styles.quantityIcon} source={IC_PLUS} />
                                 </TouchableOpacity>
                             </View>
@@ -63,6 +56,31 @@ const MyCartScreen: React.FC<PropsType> = props => {
                     </View>
                 </View>
             </View>
+        )
+    }
+
+    //list header
+    const _listHeader = () => {
+        return (
+            <Header
+                title='My Cart'
+                iconLeft={IC_BACK}
+                iconRight={BIN}
+                isCheck={true}
+                eventLeft={() => navigation.goBack()} />
+        )
+    }
+
+    return (
+        <View style={styles.container}>
+            <StatusBar
+                barStyle={'dark-content'}
+                backgroundColor={'transparent'} />
+            <FlatList
+                data={popularData}
+                renderItem={_itemCart}
+                showsHorizontalScrollIndicator={true}
+                ListHeaderComponent={_listHeader} />
             <View style={styles.confirm}>
                 <View style={styles.totalPrice}>
                     <Text style={styles.body}>Total Price</Text>
@@ -82,13 +100,13 @@ export default MyCartScreen
 const styles = StyleSheet.create({
     container: {
         flex: 1,
-        backgroundColor: color.White
+        backgroundColor: color.White,
     },
     item: {
         flex: 1,
-        marginTop: 30,
+        marginBottom: 24,
         paddingHorizontal: 24,
-        gap: 35
+        gap: 35,
     },
     itemImage: {
         flexDirection: 'row',
@@ -110,9 +128,10 @@ const styles = StyleSheet.create({
         fontFamily: 'DMSans-Bold',
     },
     image: {
-        width: 90,
-        height: 90,
+        width: 100,
+        height: 100,
         borderRadius: 10,
+        backgroundColor: color.GreyLight1
     },
     quantityControl: {
         flexDirection: 'row',
@@ -138,13 +157,14 @@ const styles = StyleSheet.create({
         height: 20
     },
     itemOption: {
-        marginTop: 13,
+        marginTop: 16,
         flexDirection: 'row',
         alignItems: 'center',
         justifyContent: 'space-between'
     },
     confirm: {
-        flex: 0
+        flex: 0,
+        marginTop: 8
     },
     totalPrice: {
         flexDirection: 'row',
@@ -174,3 +194,23 @@ const styles = StyleSheet.create({
         fontSize: 14
     }
 });
+const popularData =
+    [
+        {
+            "id": 1,
+            "image": "https://vn.jbl.com/dw/image/v2/AAUJ_PRD/on/demandware.static/-/Sites-masterCatalog_Harman/default/dw45c69ed4/JBL_TOUR_ONE_BLK_Hero.jpg?sw=270&sh=330&sm=fit&sfrm=png",
+            "name": "Mozard IP-878",
+            "price": 270,
+            "rating": 4.6,
+            "review": 10,
+        },
+        {
+            "id": 2,
+            "image": "https://bizweb.dktcdn.net/100/445/497/products/3855bea1-137b-4394-bdbe-2af2682b06a1-jpg-v-1683792459683.png?v=1683864214557",
+            "name": "JBL Live 660NC",
+            "price": 120,
+            "rating": 3.5,
+            "review": 14,
+        },
+
+    ]

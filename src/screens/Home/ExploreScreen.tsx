@@ -111,7 +111,6 @@ const ExploreScreen: React.FC<PropsType> = props => {
                     <Flashlist
                         options={options} />
                 </View>
-
             </View>
         )
     }
