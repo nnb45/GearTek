@@ -134,8 +134,7 @@ const HomeScreen: React.FC<PropsType> = props => {
                         <Pressable onPress={_profile}>
                             <Image
                                 source={require('../../../assets/img/avatar.png')}
-                                style={styles.avatar}
-                            />
+                                style={styles.avatar} />
                         </Pressable>
                     </View>
                     <View>
@@ -147,20 +146,19 @@ const HomeScreen: React.FC<PropsType> = props => {
                         </Text>
                     </View>
                     <View style={styles.inputcontainer}>
-                        <View style={styles.top}>
+                        <Pressable style={styles.top} onPress={_search}>
                             <TextInput
                                 style={styles.input}
                                 placeholder='Search headphone'
+                                editable={false}
                                 placeholderTextColor={color.Grey} />
-
                             <TouchableOpacity
-                                onPress={_search}
                                 style={styles.searchImage}>
                                 <Image
                                     source={require('../../../assets/img/search.png')}
                                     style={styles.searchicon} />
                             </TouchableOpacity>
-                        </View>
+                        </Pressable>
                     </View>
                 </View>
                 <View style={styles.flex8}>
@@ -206,10 +204,6 @@ const HomeScreen: React.FC<PropsType> = props => {
                     </View>
                 </View>
             </View>
-            <Pressable style={styles.btnAdd} onPress={() => navigation.navigate('PaymentStatusScreen')}>
-                <Text style={styles.txtAdd}>Select Payment Method</Text>
-                <Image source={IC_NEXT} style={{ width: 25, height: 25 }} />
-            </Pressable>
         </ScrollView>
     )
 }
@@ -356,22 +350,6 @@ const styles = StyleSheet.create({
         fontFamily: 'DMSans-Medium',
         fontSize: 14
     },
-    btnAdd: {
-        alignItems: 'center',
-        flexDirection: 'row',
-        backgroundColor: color.Primary,
-        justifyContent: 'space-between',
-        borderRadius: 10,
-        height: 'auto',
-        margin: 24,
-        paddingVertical: 15,
-        paddingHorizontal: 30
-    },
-    txtAdd: {
-        color: color.White,
-        fontFamily: 'DMSans-Bold',
-        fontSize: 14
-    }
 })
 
 var IT = [

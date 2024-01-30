@@ -93,7 +93,7 @@ const ExploreScreen: React.FC<PropsType> = props => {
         return (
             <View style={styles.information}>
                 <Header
-                    styleContainer={{ backgroundColor: color.White, marginHorizontal: -24 }}
+                    styleContainer={{ backgroundColor: color.White, marginHorizontal: -24, marginTop: -20 }}
                     title='Explore'
                     isCheck={true}
                     eventLeft={() => navigation.goBack()}
@@ -111,7 +111,6 @@ const ExploreScreen: React.FC<PropsType> = props => {
                     <Flashlist
                         options={options} />
                 </View>
-
             </View>
         )
     }
@@ -127,9 +126,8 @@ const ExploreScreen: React.FC<PropsType> = props => {
                     renderItem={_itemCardProduct}
                     ListHeaderComponent={_listHeader}
                     numColumns={2}
-                    showsHorizontalScrollIndicator={true} />
+                    showsVerticalScrollIndicator={false} />
             </View>
-
         </View>
     )
 }
@@ -138,14 +136,14 @@ export default ExploreScreen
 
 const styles = StyleSheet.create({
     iconHeart: {
-        marginRight: 4
+        // marginRight: 4
     },
     txtNumberReviews: {
         fontSize: 12,
         color: 'black',
         fontWeight: '400',
         fontFamily: 'DMSans-Regular',
-        marginLeft: -10
+        marginLeft: -4
     },
     txtRating: {
         fontSize: 12,
@@ -180,7 +178,8 @@ const styles = StyleSheet.create({
         alignContent: 'center',
     },
     cardMoney: {
-        marginLeft: 8
+        paddingHorizontal: 10,
+        paddingVertical: 15
     },
     imgProduct: {
         width: 120,
@@ -190,13 +189,12 @@ const styles = StyleSheet.create({
     cardProduct: {
         // width: 160,
         width: Dimensions.get('screen').width * 0.4,
-        height: 200,
+        height: 220,
         borderRadius: 15,
         backgroundColor: color.White,
         marginLeft: 26,
         marginVertical: 14,
         alignItems: 'center',
-        borderWidth: 1
     },
     containerProduct: {
         flex: 1,
