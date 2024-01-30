@@ -126,9 +126,8 @@ const ExploreScreen: React.FC<PropsType> = props => {
                     renderItem={_itemCardProduct}
                     ListHeaderComponent={_listHeader}
                     numColumns={2}
-                    showsHorizontalScrollIndicator={true} />
+                    showsVerticalScrollIndicator={false} />
             </View>
-
         </View>
     )
 }
