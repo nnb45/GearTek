@@ -1,9 +1,12 @@
 import { Button, StyleSheet, Text, View, Image, TextInput, TouchableOpacity, ScrollView, FlatList, Pressable } from 'react-native'
-import React, { useState } from 'react'
+import React, { useEffect, useState } from 'react'
 import { NativeStackScreenProps } from '@react-navigation/native-stack';
 import { HomeStackParamList } from '../../components/navigation/HomeStack';
 import { color } from '../../themes/theme';
 import { IC_NEXT } from '../../../assets/img';
+import { Product } from '../../domain/enity/product';
+import { useAppContext } from '../../components/context/AppContext';
+import { RouteProp, useRoute } from '@react-navigation/native';
 
 
 type PropsType = NativeStackScreenProps<HomeStackParamList, 'HomeScreen'>;
@@ -20,20 +23,16 @@ interface All {
     name: string,
 }
 
-interface SanPham2 {
-    id: number,
-    name: string,
-    avatar: string,
-    price: number,
+interface ID {
+    id: string,
 }
 
 
 const HomeScreen: React.FC<PropsType> = props => {
     const { navigation } = props;
+    const route = useRoute<RouteProp<HomeStackParamList, 'HomeScreen'>>()
+    const { products, setProducts } = useAppContext();
 
-    const _detail = () => {
-        navigation.navigate('ProductDetailScreen');
-    }
     const _explore = () => {
         navigation.navigate('ExploreScreen')
     }
@@ -45,11 +44,21 @@ const HomeScreen: React.FC<PropsType> = props => {
     }
     const [all, setAll] = useState(IT)
     const [selectedIndex, setselectedIndex] = useState(1)// set mau chu 
-
     const [sanpham, setSanpham] = useState(SANPHAM)
 
-    const [sanpham2, setSanpham2] = useState(SANPHAM2)
-
+    const getProductList = async () => {
+        try {
+            const response = await fetch('https://geartekserver-production.up.railway.app/api/products');
+            const data: Product[] = await response.json();
+            setProducts(data);
+            console.log('Product data:', data);
+        } catch (error) {
+            console.error('Error fetching products:', error);
+        }
+    };
+    useEffect(() => {
+        getProductList();
+    }, []);
 
     const renderList = ({ item }: { item: All }) => {
         const { id, name } = item
@@ -71,47 +80,50 @@ const HomeScreen: React.FC<PropsType> = props => {
         )
     }
 
-    const renderSanpham = ({ item }: { item: SanPham }) => {
-        const { id, name, avatar } = item
+    const renderSanpham = ({ item }: { item: Product }) => {
         return (
             <View style={styles.list}>
                 <View>
-                    <Text style={styles.text}>{name}</Text>
+                    <Text style={styles.text} numberOfLines={3} ellipsizeMode='tail'>{item.productName}</Text>
                     <TouchableOpacity style={styles.button} onPress={_explore}>
                         <Text style={styles.textBt}>Shop now</Text>
                     </TouchableOpacity>
                 </View>
 
                 <View>
-                    <Image
-                        source={{ uri: avatar }}
-                        style={styles.img}
-                    />
+                    {item.productImages && item.productImages.length > 0 && (
+                        <Image source={{ uri: item.productImages[0] }} style={styles.img} />
+                    )}
                 </View>
-
-
             </View>
         )
     }
 
 
-    const renderSanpham2 = ({ item }: { item: SanPham2 }) => {
-        const { id, name, avatar, price } = item
+    const renderSanpham2 = ({ item }: { item: Product }) => {
+        const _detail = () => {
+            navigation.navigate('ProductDetailScreen',
+                {
+                    productID: item._id,
+                    productName: item.productName,
+                    productImage: item.productImages,
+                    productPrice: item.productPrice
+                });
+        }
         return (
             <TouchableOpacity style={styles.sanpham} onPress={_detail}>
                 <View>
                     <Image
-                        source={{ uri: avatar }}
+                        source={{ uri: item.productImages[0] }}
                         style={styles.img}
                     />
                 </View>
                 <View>
-                    <Text style={styles.productName}>{name}</Text>
+                    <Text style={styles.productName} ellipsizeMode='tail' numberOfLines={2}>{item.productName}</Text>
                 </View>
                 <View>
-                    <Text style={styles.infor}>USD {price}</Text>
+                    <Text style={styles.infor}>USD {item.productPrice.toString()}</Text>
                 </View>
-
             </TouchableOpacity>
         )
     }
@@ -178,7 +190,7 @@ const HomeScreen: React.FC<PropsType> = props => {
                             showsHorizontalScrollIndicator={false}
                             showsVerticalScrollIndicator={false}
                             horizontal={true}
-                            data={sanpham}
+                            data={products}
                             renderItem={renderSanpham}
 
                         />
@@ -198,7 +210,7 @@ const HomeScreen: React.FC<PropsType> = props => {
                             showsHorizontalScrollIndicator={false}
                             showsVerticalScrollIndicator={false}
                             horizontal={true}
-                            data={sanpham2}
+                            data={products}
                             renderItem={renderSanpham2}
                         />
                     </View>
@@ -227,6 +239,8 @@ const styles = StyleSheet.create({
         color: 'black'
     },
     sanpham: {
+        justifyContent: 'center',
+        width: 155,
         padding: 15,
         backgroundColor: color.White,
         margin: 10,
@@ -250,6 +264,7 @@ const styles = StyleSheet.create({
         bottom: 1
     },
     text: {
+        width: 140,
         fontSize: 20,
         fontFamily: 'DMSans-Bold',
         color: 'black',
@@ -344,7 +359,8 @@ const styles = StyleSheet.create({
         width: 135,
         height: 135,
         borderRadius: 12,
-        margin: 8
+        margin: 8,
+        alignSelf: 'center'
     },
     renderButton: {
         fontFamily: 'DMSans-Medium',
