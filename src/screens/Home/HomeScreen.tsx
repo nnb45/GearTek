@@ -104,13 +104,9 @@ const HomeScreen: React.FC<PropsType> = props => {
 
     const renderSanpham2 = ({ item }: { item: Product }) => {
         const _detail = () => {
-            navigation.navigate('ProductDetailScreen',
-                {
-                    productID: item._id,
-                    productName: item.productName,
-                    productImage: item.productImages,
-                    productPrice: item.productPrice
-                });
+            navigation.navigate('ProductDetailScreen', {
+                productID: item._id,
+            });
         }
         return (
             <TouchableOpacity style={styles.sanpham} onPress={_detail}>

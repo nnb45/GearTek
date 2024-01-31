@@ -1,5 +1,5 @@
-import { StyleSheet, Text, View, Dimensions, Image, FlatList, StatusBar, Pressable, TouchableOpacity } from 'react-native'
-import { ScrollView } from 'react-native-virtualized-view'
+import { StyleSheet, Text, View, Dimensions, Image, ScrollView, FlatList, StatusBar, Pressable, TouchableOpacity, VirtualizedList } from 'react-native'
+// import { ScrollView } from 'react-native-virtualized-view'
 import React, { useEffect, useState } from 'react'
 import { NativeStackScreenProps } from '@react-navigation/native-stack';
 import Icon from 'react-native-vector-icons/FontAwesome';
@@ -9,57 +9,61 @@ import { HomeStackParamList } from '../../components/navigation/HomeStack';
 import { color } from '../../themes/theme';
 import { Product } from '../../domain/enity/product';
 import { useAppContext } from '../../components/context/AppContext';
-import { RouteProp, useRoute } from '@react-navigation/native';
+import { useRoute } from '@react-navigation/native';
+import axios from 'axios';
+
 interface Details {
     productID: string,
     productName: string,
-    productImages: string[],
-    productPrice: Number,
+    productImages: ProductImage[];
+    productPrice: string,
+    productReviews: string
 }
-
+type ProductImage = {
+    key: string;
+    image: string;
+};
 type PropsType = NativeStackScreenProps<HomeStackParamList, 'ProductDetailScreen'>;
 const ProductDetailScreen: React.FC<PropsType> = props => {
     const { navigation } = props;
     const { products } = useAppContext();
-    const [detail, setDetail] = useState<Details[]>([]);
+    const [detail, setDetail] = useState<Details>({} as Details);
+    const [images, setImages] = useState<ProductImage[]>();
+    const route = useRoute();
+    const { productID } = route.params as Details;
 
-    const route = useRoute<RouteProp<HomeStackParamList, 'HomeScreen'>>();
-    const { productID, productName, productImages, productPrice } = route.params as Details;
-    const getProductInfo = async () => {
-        try {
-            const response = await fetch(`https://geartekserver-production.up.railway.app/api/products/${productID}`);
-            const data = await response.json();
-            setDetail(data);
-            console.log('Product details:', data);
-            console.log('Product ID:', productID);
-        } catch (error) {
-            console.error('Error fetching products:', error);
-        }
-    };
     useEffect(() => {
+        const getProductInfo = async () => {
+            try {
+                const response = await axios.get(`https://geartekserver-production.up.railway.app/api/products/${productID}`);
+                const data: Details = response.data;
+                setDetail(data);
+                console.log('Product details:', data);
+                setImages(data.productImages);
+            } catch (error) {
+                console.error('Error fetching products:', error);
+            }
+        }
         getProductInfo();
     }, []);
-
-    const _handleCart = () => {
-        navigation.navigate('MyCartScreen');
+    const _handleReiceipt = () => {
+        navigation.navigate('ReceiptScreen');
     }
     const screenWidth = Dimensions.get('window').width;
     const _detail = () => {
         navigation.navigate('ProductDetailScreen');
     }
-    console.log('Details data:', detail);
-    const _renderItemImage = ({ item }: { item: Details }) => {
-        console.log(item.productImages[0]);
+    const _renderItemImage = ({ item }: { item: ProductImage }) => {
         return (
-            // <View>
-            //     {item.productImages.map((image, index) => (
-            //         <Image key={index} source={{ uri: image }} style={styles.image} />
-            //     ))}
-            // </View>
-            <Image source={{ uri: item.productImages[0] }} style={styles.image} />
-        )
+            <Image
+                key={item.key}
+                source={{ uri: item.image }}
+                style={styles.image}
+                onError={(e) => console.log('Error loading image:', e)}
+            />
+        );
     };
-
+    console.log('Image List:', detail.productImages);
     const _renderItemMore = ({ item }: { item: Product }) => {
         return (
             <TouchableOpacity style={styles.sanpham} onPress={_detail}>
@@ -90,8 +94,8 @@ const ProductDetailScreen: React.FC<PropsType> = props => {
                     iconLeft={IC_BACK}
                     styleContainer={{ backgroundColor: color.White, marginHorizontal: -24 }}
                     eventLeft={() => navigation.goBack()} />
-                <Text style={styles.priceText}>USD {productPrice.toString()}</Text>
-                <Text style={styles.titleText}>{productName}</Text>
+                <Text style={styles.priceText}>USD {detail?.productPrice}</Text>
+                <Text style={styles.titleText}>{detail?.productName}</Text>
 
                 <View style={styles.categoriesContainer}>
                     <Text style={styles.categoryText}>Overview</Text>
@@ -101,16 +105,14 @@ const ProductDetailScreen: React.FC<PropsType> = props => {
 
                 <View style={styles.productList}>
                     <FlatList
-                        data={detail}
+                        data={images}
                         renderItem={_renderItemImage}
-                        keyExtractor={item => item.productID.toString()}
+                        keyExtractor={(item) => item.key}
                         horizontal={true}
                         showsHorizontalScrollIndicator={false}
                     />
                 </View>
-
-
-                <Text style={styles.reviewText}>Review (102)</Text>
+                <Text style={styles.reviewText}>Review ({detail.productReviews})</Text>
                 <View style={styles.reviewContainer}>
                     <View style={styles.reviewCol}>
                         <Image source={require('../../../assets/img/avatar.png')} style={styles.avatar} />
@@ -203,8 +205,8 @@ const ProductDetailScreen: React.FC<PropsType> = props => {
                     />
                 </View>
                 <View style={{ marginVertical: 20, borderRadius: 10, height: 50 }}>
-                    <Pressable style={styles.btnAdd} onPress={_handleCart}>
-                        <Text style={styles.txtAdd}>Add to cart</Text>
+                    <Pressable style={styles.btnAdd} onPress={_handleReiceipt}>
+                        <Text style={styles.txtAdd}>Buy now</Text>
                     </Pressable>
                 </View>
             </ScrollView>
@@ -265,19 +267,18 @@ const styles = StyleSheet.create({
     },
     image: {
         borderRadius: 10,
-        height: 'auto',
+        height: 390,
         width: 285,
         marginRight: 20,
         resizeMode: 'cover',
-        marginTop: 29,
         borderWidth: 1,
-        borderColor: color.Default
+        borderColor: color.GreyLight1
     },
     productList: {
-        height: 390,
-        borderRadius: 10,
+        height: 'auto',
         resizeMode: 'cover',
         marginTop: 29,
+        justifyContent: 'center'
     },
     avatar: {
         width: 50,
