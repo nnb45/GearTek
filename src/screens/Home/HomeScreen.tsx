@@ -44,8 +44,6 @@ const HomeScreen: React.FC<PropsType> = props => {
     }
     const [all, setAll] = useState(IT)
     const [selectedIndex, setselectedIndex] = useState(1)// set mau chu 
-
-
     const [sanpham, setSanpham] = useState(SANPHAM)
 
     const getProductList = async () => {
