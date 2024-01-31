@@ -15,6 +15,9 @@ interface cartProps {
 type PropsType = NativeStackScreenProps<HomeStackParamList, 'MyCartScreen'>;
 const MyCartScreen: React.FC<PropsType> = props => {
     const { navigation } = props
+    const _handleCheckout = () => {
+        navigation.navigate('ReceiptScreen')
+    }
     const [quantity, setQuantity] = useState<number>(1);
 
     const decreaseQuantity = () => {
@@ -83,7 +86,7 @@ const MyCartScreen: React.FC<PropsType> = props => {
                     <Text style={styles.body}>Total Price</Text>
                     <Text style={styles.body}>USD 313</Text>
                 </View>
-                <Pressable style={styles.btnAdd} onPress={() => Alert.alert('Button pressed')}>
+                <Pressable style={styles.btnAdd} onPress={_handleCheckout}>
                     <Text style={styles.txtAdd}>Proceed to Checkout</Text>
                     <Image source={IC_NEXT} style={{ width: 25, height: 25 }} />
                 </Pressable>

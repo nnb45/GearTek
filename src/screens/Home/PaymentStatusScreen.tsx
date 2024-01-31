@@ -11,6 +11,9 @@ const PaymentStatusScreen: React.FC<PropsType> = props => {
    const _handleReceipt = () => {
       navigation.navigate('ReceiptScreen')
    }
+   const _handleHome = () => {
+      navigation.navigate('HomeScreen')
+   }
    return (
       <View style={styles.container}>
          <StatusBar
@@ -29,7 +32,7 @@ const PaymentStatusScreen: React.FC<PropsType> = props => {
             <Text style={styles.txtView}>View Reciept</Text>
          </Pressable>
          <TouchableOpacity>
-            <Text style={styles.txtBack}>Back to Home</Text>
+            <Text style={styles.txtBack} onPress={_handleHome}>Back to Home</Text>
          </TouchableOpacity>
       </View>
    )
