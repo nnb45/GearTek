@@ -1,31 +1,50 @@
 import { FlatList, Image, Pressable, StatusBar, StyleSheet, Text, TouchableOpacity, View } from 'react-native'
 import { ScrollView } from 'react-native-virtualized-view'
-import React from 'react'
+import React, { useEffect, useState } from 'react'
 import { color } from '../../themes/theme'
 import { NativeStackScreenProps } from '@react-navigation/native-stack';
 import { HomeStackParamList } from '../../components/navigation/HomeStack';
 import Header from '../../components/Header/Header';
 import { DELETE, IC_BACK, IC_CARD, IC_CART, IC_LOCATION, IC_NEXT, IC_ORDER, IC_WALLET } from '../../../assets/img';
+import { useRoute } from '@react-navigation/native';
+import { Product } from '../../domain/enity/product';
+import axios from 'axios';
 
-interface orderProduct {
-   id: number,
-   productImage: string,
+interface Detail {
+   productID: string,
+   productImages: string,
    productName: string,
-   productPrice: number
+   productPrice: string
 }
 type PropsType = NativeStackScreenProps<HomeStackParamList, 'ReceiptScreen'>;
 const ReceiptScreen: React.FC<PropsType> = props => {
-   const { navigation } = props;
+
+   const { navigation, route } = props;
+   // Retrieve parameters from the route
+   const { productID, productName, productPrice, productImages } = route.params as Detail
+   // Use the received parameters as needed
+   // ...
+   const [detail, setDetail] = useState<Detail>({} as Detail);
+   // Example usage:
+   console.log('Received Product ID:', productID);
+   console.log('Received Product Name:', productName);
+   console.log('Received Product Price:', productPrice);
+   console.log('Received Product Images:', productImages);
+
    const _handlePayment = () => {
       navigation.navigate('PaymentMethodScreen')
    }
    const _handleCheckout = () => {
       navigation.navigate('PaymentStatusScreen')
    }
-   const _itemOrder = ({ item }: { item: orderProduct }) => {
+   const _itemOrder = ({ item }: { item: Detail }) => {
       return (
          <View style={styles.orderItem}>
-            <Image source={{ uri: item.productImage }} style={styles.imgProduct} />
+            {/* <Image source={{ uri: item.productImages }} style={styles.imgProduct} /> */}
+            {item.productImages && item.productImages.length > 0 && (
+               <Image source={{ uri: item.productImages[0] }}
+                  style={styles.imgProduct} resizeMode='center' />
+            )}
             <View style={styles.infoProduct}>
                <Text style={styles.productName}>{item.productName}</Text>
                <Text style={styles.body}>Item: 1</Text>
@@ -37,7 +56,6 @@ const ReceiptScreen: React.FC<PropsType> = props => {
          </View>
       )
    }
-
    return (
       <View style={styles.container}>
          <StatusBar
@@ -70,10 +88,10 @@ const ReceiptScreen: React.FC<PropsType> = props => {
                   <Text style={styles.addressTitle}>Order</Text>
                </View>
                <FlatList
-                  data={orderList}
+                  data={[detail]}
                   renderItem={_itemOrder}
                   contentContainerStyle={{ gap: 30 }}
-                  keyExtractor={item => item.id.toString()}
+                  keyExtractor={item => item.productID}
                   showsVerticalScrollIndicator={false}
                />
             </View>
@@ -263,47 +281,47 @@ const styles = StyleSheet.create({
    }
 })
 
-const orderList: orderProduct[] = [
-   {
-      id: 1,
-      productImage: "https://firebasestorage.googleapis.com/v0/b/stay-hotel-booking-app.appspot.com/o/hotel%2FDeluxeMajestic.png?alt=media&token=fc2b745e-ab8f-4608-8474-00972b1f18b5",
-      productName: "Moondrop Chu",
-      productPrice: 21.99
-   },
-   {
-      id: 2,
-      productImage: "https://firebasestorage.googleapis.com/v0/b/stay-hotel-booking-app.appspot.com/o/hotel%2FDeluxeMajestic.png?alt=media&token=fc2b745e-ab8f-4608-8474-00972b1f18b5",
-      productName: "Moondrop Chu",
-      productPrice: 21.99
-   },
-   {
-      id: 3,
-      productImage: "https://firebasestorage.googleapis.com/v0/b/stay-hotel-booking-app.appspot.com/o/hotel%2FDeluxeMajestic.png?alt=media&token=fc2b745e-ab8f-4608-8474-00972b1f18b5",
-      productName: "Moondrop Chu",
-      productPrice: 21.99
-   },
-   {
-      id: 4,
-      productImage: "https://firebasestorage.googleapis.com/v0/b/stay-hotel-booking-app.appspot.com/o/hotel%2FDeluxeMajestic.png?alt=media&token=fc2b745e-ab8f-4608-8474-00972b1f18b5",
-      productName: "Moondrop Chu",
-      productPrice: 21.99
-   },
-   {
-      id: 5,
-      productImage: "https://firebasestorage.googleapis.com/v0/b/stay-hotel-booking-app.appspot.com/o/hotel%2FDeluxeMajestic.png?alt=media&token=fc2b745e-ab8f-4608-8474-00972b1f18b5",
-      productName: "Moondrop Chu",
-      productPrice: 21.99
-   },
-   {
-      id: 6,
-      productImage: "https://firebasestorage.googleapis.com/v0/b/stay-hotel-booking-app.appspot.com/o/hotel%2FDeluxeMajestic.png?alt=media&token=fc2b745e-ab8f-4608-8474-00972b1f18b5",
-      productName: "Moondrop Chu",
-      productPrice: 21.99
-   },
-   {
-      id: 7,
-      productImage: "https://firebasestorage.googleapis.com/v0/b/stay-hotel-booking-app.appspot.com/o/hotel%2FDeluxeMajestic.png?alt=media&token=fc2b745e-ab8f-4608-8474-00972b1f18b5",
-      productName: "Moondrop Chu",
-      productPrice: 21.99
-   },
-]
+// const orderList: orderProduct[] = [
+//    {
+//       id: 1,
+//       productImage: "https://firebasestorage.googleapis.com/v0/b/stay-hotel-booking-app.appspot.com/o/hotel%2FDeluxeMajestic.png?alt=media&token=fc2b745e-ab8f-4608-8474-00972b1f18b5",
+//       productName: "Moondrop Chu",
+//       productPrice: 21.99
+//    },
+//    {
+//       id: 2,
+//       productImage: "https://firebasestorage.googleapis.com/v0/b/stay-hotel-booking-app.appspot.com/o/hotel%2FDeluxeMajestic.png?alt=media&token=fc2b745e-ab8f-4608-8474-00972b1f18b5",
+//       productName: "Moondrop Chu",
+//       productPrice: 21.99
+//    },
+//    {
+//       id: 3,
+//       productImage: "https://firebasestorage.googleapis.com/v0/b/stay-hotel-booking-app.appspot.com/o/hotel%2FDeluxeMajestic.png?alt=media&token=fc2b745e-ab8f-4608-8474-00972b1f18b5",
+//       productName: "Moondrop Chu",
+//       productPrice: 21.99
+//    },
+//    {
+//       id: 4,
+//       productImage: "https://firebasestorage.googleapis.com/v0/b/stay-hotel-booking-app.appspot.com/o/hotel%2FDeluxeMajestic.png?alt=media&token=fc2b745e-ab8f-4608-8474-00972b1f18b5",
+//       productName: "Moondrop Chu",
+//       productPrice: 21.99
+//    },
+//    {
+//       id: 5,
+//       productImage: "https://firebasestorage.googleapis.com/v0/b/stay-hotel-booking-app.appspot.com/o/hotel%2FDeluxeMajestic.png?alt=media&token=fc2b745e-ab8f-4608-8474-00972b1f18b5",
+//       productName: "Moondrop Chu",
+//       productPrice: 21.99
+//    },
+//    {
+//       id: 6,
+//       productImage: "https://firebasestorage.googleapis.com/v0/b/stay-hotel-booking-app.appspot.com/o/hotel%2FDeluxeMajestic.png?alt=media&token=fc2b745e-ab8f-4608-8474-00972b1f18b5",
+//       productName: "Moondrop Chu",
+//       productPrice: 21.99
+//    },
+//    {
+//       id: 7,
+//       productImage: "https://firebasestorage.googleapis.com/v0/b/stay-hotel-booking-app.appspot.com/o/hotel%2FDeluxeMajestic.png?alt=media&token=fc2b745e-ab8f-4608-8474-00972b1f18b5",
+//       productName: "Moondrop Chu",
+//       productPrice: 21.99
+//    },
+// ]

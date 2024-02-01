@@ -47,7 +47,14 @@ const ProductDetailScreen: React.FC<PropsType> = props => {
         getProductInfo();
     }, []);
     const _handleReiceipt = () => {
-        navigation.navigate('ReceiptScreen');
+
+        navigation.navigate('ReceiptScreen',
+            {
+                productID: detail.productID,
+                productName: detail.productName,
+                productPrice: detail.productPrice,
+                productImages: detail.productImages
+            })
     }
     const screenWidth = Dimensions.get('window').width;
     const _detail = () => {
@@ -168,7 +175,6 @@ const ProductDetailScreen: React.FC<PropsType> = props => {
                         </Text>
 
                     </View>
-
                     {/* Add more reviews here */}
                 </View>
                 <View style={styles.reviewContainer}>
@@ -213,7 +219,6 @@ const ProductDetailScreen: React.FC<PropsType> = props => {
         </View>
     )
 }
-
 
 export default ProductDetailScreen
 
