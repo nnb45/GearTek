@@ -7,46 +7,42 @@ import { HomeStackParamList } from '../../components/navigation/HomeStack';
 import Header from '../../components/Header/Header';
 import { DELETE, IC_BACK, IC_CARD, IC_CART, IC_LOCATION, IC_NEXT, IC_ORDER, IC_WALLET } from '../../../assets/img';
 import { useRoute } from '@react-navigation/native';
-import { Product } from '../../domain/enity/product';
-import axios from 'axios';
 
 interface Detail {
-   productID: string,
-   productImages: string,
-   productName: string,
-   productPrice: string
+   productID: string;
+   productName: string;
+   productPrice: number;
+   productImages: { image: string }[];
 }
+
 type PropsType = NativeStackScreenProps<HomeStackParamList, 'ReceiptScreen'>;
 const ReceiptScreen: React.FC<PropsType> = props => {
-
-   const { navigation, route } = props;
-   // Retrieve parameters from the route
+   const { navigation } = props;
+   const route = useRoute();
    const { productID, productName, productPrice, productImages } = route.params as Detail
    // Use the received parameters as needed
    // ...
-   const [detail, setDetail] = useState<Detail>({} as Detail);
    // Example usage:
-   console.log('Received Product ID:', productID);
-   console.log('Received Product Name:', productName);
-   console.log('Received Product Price:', productPrice);
-   console.log('Received Product Images:', productImages);
-
+   console.log('>>>>>>>>>>>> Receive data: ',productID, productName, productImages, productPrice)
    const _handlePayment = () => {
       navigation.navigate('PaymentMethodScreen')
    }
    const _handleCheckout = () => {
       navigation.navigate('PaymentStatusScreen')
    }
+   const calculateShippingCost = (productPrice: number): number => Math.round(parseFloat((productPrice * 0.1).toFixed(2)));
+   const calculateTotalPrice = (productPrice: number): number => productPrice + calculateShippingCost(productPrice)
+
    const _itemOrder = ({ item }: { item: Detail }) => {
       return (
          <View style={styles.orderItem}>
             {/* <Image source={{ uri: item.productImages }} style={styles.imgProduct} /> */}
             {item.productImages && item.productImages.length > 0 && (
-               <Image source={{ uri: item.productImages[0] }}
+               <Image source={{ uri: item.productImages[0].image }}
                   style={styles.imgProduct} resizeMode='center' />
             )}
             <View style={styles.infoProduct}>
-               <Text style={styles.productName}>{item.productName}</Text>
+               <Text style={styles.productName} numberOfLines={1} ellipsizeMode="tail">{item.productName}</Text>
                <Text style={styles.body}>Item: 1</Text>
                <View style={styles.productOption}>
                   <Text style={styles.productPrice}>USD {item.productPrice}</Text>
@@ -88,7 +84,7 @@ const ReceiptScreen: React.FC<PropsType> = props => {
                   <Text style={styles.addressTitle}>Order</Text>
                </View>
                <FlatList
-                  data={[detail]}
+                  data={[{ productID, productName, productPrice, productImages }]}
                   renderItem={_itemOrder}
                   contentContainerStyle={{ gap: 30 }}
                   keyExtractor={item => item.productID}
@@ -110,16 +106,16 @@ const ReceiptScreen: React.FC<PropsType> = props => {
          <View style={styles.confirm}>
             <View style={styles.orderInfo}>
                <View style={styles.totalPrice}>
-                  <Text style={styles.body2}>Items (2)</Text>
-                  <Text style={styles.body2}>USD 295</Text>
+                  <Text style={styles.body2}>Items (1)</Text>
+                  <Text style={styles.body2}>USD {productPrice}</Text>
                </View>
                <View style={styles.totalPrice}>
                   <Text style={styles.body2}>Shipping</Text>
-                  <Text style={styles.body2}>USD 29</Text>
+                  <Text style={styles.body2}>USD {calculateShippingCost(productPrice)}</Text>
                </View>
                <View style={styles.totalPrice}>
                   <Text style={styles.body3}>Total Price</Text>
-                  <Text style={styles.body3}>USD 313</Text>
+                  <Text style={styles.body3}>USD {calculateTotalPrice(productPrice)}</Text>
                </View>
             </View>
             <Pressable style={styles.btn} onPress={_handleCheckout}>

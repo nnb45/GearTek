@@ -47,14 +47,12 @@ const ProductDetailScreen: React.FC<PropsType> = props => {
         getProductInfo();
     }, []);
     const _handleReiceipt = () => {
-
-        navigation.navigate('ReceiptScreen',
-            {
-                productID: detail.productID,
-                productName: detail.productName,
-                productPrice: detail.productPrice,
-                productImages: detail.productImages
-            })
+        navigation.navigate('ReceiptScreen', {
+            productID: productID,
+            productName: detail.productName,
+            productPrice: detail.productPrice,
+            productImages: detail.productImages
+        });
     }
     const screenWidth = Dimensions.get('window').width;
     const _detail = () => {
