@@ -6,53 +6,55 @@ import { color } from '../../themes/theme';
 import { ClockIcons, LeftIcons, MoreIconVertical, SearchIcons, StartIcons, XIcons } from '../../../assets/icons';
 import Header from '../../components/Header/Header';
 import { Cart_Icon, IC_BACK } from '../../../assets/img';
-import axios from 'axios';
-import { Product } from '../../domain/enity/product';
-
+type PropsType = NativeStackScreenProps<HomeStackParamList, 'SearchScreen'>;
 
 //interface
 interface historyProps {
     id: number,
     title: string
 }
-
-interface ProductSearchResponse {
-    products: Product[];
+interface popularProps {
+    id: number,
+    image: string,
+    name: string,
+    price: number,
+    rating: number,
+    review: number
 }
 
-// //render Item history search
-// const _itemHistorySearch = ({ item }: { item: historyProps }) => {
-//     return (
-//         <View style={styles.cardHistorySearch}>
-//             <View style={styles.itemHistorySearch}>
-//                 <ClockIcons />
-//                 <Text style={styles.txtHistory}>{item.title}</Text>
-//             </View>
-//             <TouchableOpacity
-//                 activeOpacity={0.7}>
-//                 <XIcons />
-//             </TouchableOpacity>
-//         </View>
-//     )
-// }
+//render Item history search
+const _itemHistorySearch = ({ item }: { item: historyProps }) => {
+    return (
+        <View style={styles.cardHistorySearch}>
+            <View style={styles.itemHistorySearch}>
+                <ClockIcons />
+                <Text style={styles.txtHistory}>{item.title}</Text>
+            </View>
+            <TouchableOpacity
+                activeOpacity={0.7}>
+                <XIcons />
+            </TouchableOpacity>
+        </View>
+    )
+}
 //render item Popular
-const _itemPopular = ({ item }: { item: Product }) => {
+const _itemPopular = ({ item }: { item: popularProps }) => {
     return (
         <View style={styles.cardPopular}>
             <View style={styles.itemPopular}>
                 <Image
                     style={styles.imgProduct}
-                    source={{ uri: item.productImages[0] }} />
+                    source={{ uri: item.image }} />
             </View>
             <View style={styles.cardMoney}>
-                <Text style={styles.txtNameProduct}>{item.productName}</Text>
-                <Text style={styles.txtPriceProduct}>USD {item.productPrice.toString()}</Text>
+                <Text style={styles.txtNameProduct}>{item.name}</Text>
+                <Text style={styles.txtPriceProduct}>USD {item.price}</Text>
                 <View style={styles.cardRating}>
                     <View style={styles.itemRating}>
                         <StartIcons />
-                        <Text style={styles.txtRating}>{item.productRates.toString()}</Text>
+                        <Text style={styles.txtRating}>{item.rating}</Text>
                     </View>
-                    <Text style={styles.txtNumberReviews}>{item.productReviews.toString()} Reviews</Text>
+                    <Text style={styles.txtNumberReviews}>{item.review} Reviews</Text>
                     <MoreIconVertical />
                 </View>
             </View>
@@ -60,83 +62,51 @@ const _itemPopular = ({ item }: { item: Product }) => {
     )
 }
 
-type PropsType = NativeStackScreenProps<HomeStackParamList, 'SearchScreen'>;
 const SearchScreen: React.FC<PropsType> = props => {
-    const { navigation } = props;
-
-    const [searchText, setSearchText] = useState('');
-    const [result, setResult] = useState<Product[]>([]);
-
-    async function searchProducts(text: string): Promise<ProductSearchResponse | null> {
-        try {
-            const response = await axios.get<ProductSearchResponse>(
-                `https://geartekserver-production.up.railway.app/api/products/search?name=${text}`
-            );
-            console.log("Search text:", text);
-            console.log(">> Result:", response.data);
-            return response.data;
-        } catch (error) {
-            console.error(error);
-            return null;
-        }
-    };
-
-    // Call the API when user types something in the input field
-    const handleSearch = async () => {
-        const text = searchText;
-        const response = await searchProducts(text);
-        if (response) {
-            setResult(response.products);
-        }
-    };
-    const MemoizedTextInput = React.memo(TextInput);
+    const { navigation } = props
 
     //list header
     const _listHeader = () => {
         return (
             <View>
                 <Header
-                    styleContainer={{ backgroundColor: color.White, marginHorizontal: -24 }}
+                    styleContainer={{ backgroundColor: color.White, marginTop: 24, marginHorizontal: -24 }}
                     title='Search'
                     isCheck={true}
                     eventLeft={() => navigation.goBack()}
                     iconLeft={IC_BACK}
                     iconRight={Cart_Icon} />
                 <View style={styles.inputContainer}>
-                    <MemoizedTextInput
+                    <TextInput
                         style={styles.searchInput}
-                        placeholder='Search'
-                        value={searchText}
-                        onChangeText={text => setSearchText(text)}
-                        onSubmitEditing={handleSearch}
-                        blurOnSubmit={false}
+                        placeholder='Search headphone'
                     />
                     <View style={styles.iconSearch}>
                         <SearchIcons />
                     </View>
                 </View>
-                {/* <View style={styles.historySearch}>
+                <View style={styles.historySearch}>
                     <Text style={styles.txtLastest}>Lastest search</Text>
                     <FlatList
                         data={dataHistory}
                         renderItem={_itemHistorySearch} />
-                </View> */}
-                <Text style={styles.txtPopular}>Search Result</Text>
+                </View>
+                <Text style={styles.txtPopular}>Popular product</Text>
             </View>
         )
     }
     return (
         <View style={styles.container}>
             <StatusBar
-                barStyle={'dark-content'}
+                barStyle={'light-content'}
+                translucent={true}
                 backgroundColor={'transparent'} />
             <View>
                 <FlatList
-                    data={result}
+                    data={popularData}
                     renderItem={_itemPopular}
                     ListHeaderComponent={_listHeader}
-                    showsVerticalScrollIndicator={false}
-                    keyExtractor={(item) => item._id} />
+                    showsVerticalScrollIndicator={false} />
             </View>
         </View >
     )
@@ -178,8 +148,8 @@ const styles = StyleSheet.create({
         lineHeight: 20,
         color: 'black',
         fontFamily: 'DMSans-Regular',
-        marginBottom: 20,
-        marginTop: 30
+        fontWeight: '400',
+        marginBottom: 20
     },
     itemRating: {
         flexDirection: 'row',
