@@ -1,76 +1,79 @@
 import { FlatList, Image, StatusBar, StyleSheet, Text, TextInput, TouchableOpacity, View } from 'react-native'
-import React, { useState } from 'react'
+import React, { useCallback, useState } from 'react'
 import { NativeStackScreenProps } from '@react-navigation/native-stack';
 import { HomeStackParamList } from '../../components/navigation/HomeStack';
 import { color } from '../../themes/theme';
 import { ClockIcons, LeftIcons, MoreIconVertical, SearchIcons, StartIcons, XIcons } from '../../../assets/icons';
 import Header from '../../components/Header/Header';
-import { Cart_Icon, IC_BACK } from '../../../assets/img';
+import { Cart_Icon, IC_BACK, IC_MORE, IC_STAR } from '../../../assets/img';
+import axios from 'axios';
+import { Product } from '../../domain/enity/product';
+
+
+
+
 type PropsType = NativeStackScreenProps<HomeStackParamList, 'SearchScreen'>;
-
-//interface
-interface historyProps {
-    id: number,
-    title: string
-}
-interface popularProps {
-    id: number,
-    image: string,
-    name: string,
-    price: number,
-    rating: number,
-    review: number
-}
-
-//render Item history search
-const _itemHistorySearch = ({ item }: { item: historyProps }) => {
-    return (
-        <View style={styles.cardHistorySearch}>
-            <View style={styles.itemHistorySearch}>
-                <ClockIcons />
-                <Text style={styles.txtHistory}>{item.title}</Text>
-            </View>
-            <TouchableOpacity
-                activeOpacity={0.7}>
-                <XIcons />
-            </TouchableOpacity>
-        </View>
-    )
-}
-//render item Popular
-const _itemPopular = ({ item }: { item: popularProps }) => {
-    return (
-        <View style={styles.cardPopular}>
-            <View style={styles.itemPopular}>
-                <Image
-                    style={styles.imgProduct}
-                    source={{ uri: item.image }} />
-            </View>
-            <View style={styles.cardMoney}>
-                <Text style={styles.txtNameProduct}>{item.name}</Text>
-                <Text style={styles.txtPriceProduct}>USD {item.price}</Text>
-                <View style={styles.cardRating}>
-                    <View style={styles.itemRating}>
-                        <StartIcons />
-                        <Text style={styles.txtRating}>{item.rating}</Text>
-                    </View>
-                    <Text style={styles.txtNumberReviews}>{item.review} Reviews</Text>
-                    <MoreIconVertical />
-                </View>
-            </View>
-        </View>
-    )
-}
-
 const SearchScreen: React.FC<PropsType> = props => {
-    const { navigation } = props
+    const { navigation } = props;
+    const [text, setText] = useState<string>('')
+    const [searchResult, setSearchResults] = useState<Product[]>([]);
 
-    //list header
-    const _listHeader = () => {
+    const handleSearch = useCallback(async () => {
+        try {
+            const response = await axios.get(
+                `https://geartekserver-production.up.railway.app/api/products/search?name=${text}`
+            );
+            const data: Product[] = response.data;
+            console.log('Search text: ', text);
+            console.log('Result:', data);
+            // Update the search results state
+            setSearchResults(data);
+        } catch (error) {
+            console.error('Error searching:', error);
+        }
+    }, [text]); // Add the `text` dependency here
+    //render item Result
+    const _itemResult = useCallback(({ item }: { item: Product }) => {
+        const _detail = () => {
+            navigation.navigate('ProductDetailScreen', {
+                productID: item._id,
+            });
+        }
         return (
+            <TouchableOpacity style={styles.cardPopular} onPress={_detail}>
+                <View style={styles.itemPopular}>
+                    <Image
+                        style={styles.imgProduct}
+                        source={{ uri: item.productImages[0] }} />
+                </View>
+                <View style={styles.cardMoney}>
+                    <Text style={styles.txtNameProduct} numberOfLines={1} ellipsizeMode='tail'>{item.productName}</Text>
+                    <Text style={styles.txtPriceProduct}>USD {item.productPrice.toString()}</Text>
+                    <View style={styles.cardRating}>
+                        <View style={styles.itemRating}>
+                            <Image
+                                style={{ width: 16, height: 16 }}
+                                source={IC_STAR} />
+                            <Text style={styles.txtRating}>{item.productRates.toString()}</Text>
+                        </View>
+                        <Text style={styles.txtNumberReviews}>({item.productReviews.toString()} Reviews)</Text>
+                        <Image
+                            style={{ width: 20, height: 20 }}
+                            source={IC_MORE} />
+                    </View>
+                </View>
+            </TouchableOpacity>
+        )
+    }, []);
+
+    return (
+        <View style={styles.container}>
+            <StatusBar
+                barStyle={'dark-content'}
+                backgroundColor={'transparent'} />
             <View>
                 <Header
-                    styleContainer={{ backgroundColor: color.White, marginTop: 24, marginHorizontal: -24 }}
+                    styleContainer={{ backgroundColor: color.White, marginHorizontal: -24 }}
                     title='Search'
                     isCheck={true}
                     eventLeft={() => navigation.goBack()}
@@ -78,35 +81,37 @@ const SearchScreen: React.FC<PropsType> = props => {
                     iconRight={Cart_Icon} />
                 <View style={styles.inputContainer}>
                     <TextInput
-                        style={styles.searchInput}
-                        placeholder='Search headphone'
+                        style={[styles.searchInput, {
+                            fontFamily: text ? 'DMSans-Medium' : 'DMSans-Regular',
+                            fontSize: text ? 16 : 14,
+                            color: text ? color.Default : color.Grey,
+                        }]}
+                        placeholder='Search product'
+                        value={text}
+                        blurOnSubmit={true}
+                        onChangeText={setText}
+                        onSubmitEditing={handleSearch}
                     />
                     <View style={styles.iconSearch}>
                         <SearchIcons />
                     </View>
                 </View>
-                <View style={styles.historySearch}>
+                {/* <View style={styles.historySearch}>
                     <Text style={styles.txtLastest}>Lastest search</Text>
                     <FlatList
                         data={dataHistory}
                         renderItem={_itemHistorySearch} />
-                </View>
-                <Text style={styles.txtPopular}>Popular product</Text>
-            </View>
-        )
-    }
-    return (
-        <View style={styles.container}>
-            <StatusBar
-                barStyle={'light-content'}
-                translucent={true}
-                backgroundColor={'transparent'} />
-            <View>
-                <FlatList
-                    data={popularData}
-                    renderItem={_itemPopular}
-                    ListHeaderComponent={_listHeader}
-                    showsVerticalScrollIndicator={false} />
+                </View> */}
+                <Text style={styles.txtPopular}>Search Results:</Text>
+                {text && (
+                    <FlatList
+                        data={searchResult}
+                        renderItem={_itemResult}
+                        showsVerticalScrollIndicator={false}
+                        keyExtractor={(item) => item._id}
+                        extraData={searchResult}
+                    />
+                )}
             </View>
         </View >
     )
@@ -115,18 +120,18 @@ const SearchScreen: React.FC<PropsType> = props => {
 export default SearchScreen
 const styles = StyleSheet.create({
     txtNumberReviews: {
+        flex: 1,
         fontSize: 14,
         color: 'black',
         fontWeight: '400',
         fontFamily: 'DMSans-Regular',
-        marginRight: 80
+        marginStart: 10,
     },
     txtRating: {
         fontSize: 14,
         color: 'black',
         fontWeight: '400',
         fontFamily: 'DMSans-Regular',
-        marginRight: 24
     },
     txtPriceProduct: {
         fontSize: 14,
@@ -141,7 +146,7 @@ const styles = StyleSheet.create({
         color: 'black',
         fontWeight: '400',
         fontFamily: 'DMSans-Regular',
-        marginBottom: 6
+        marginBottom: 5
     },
     txtPopular: {
         fontSize: 16,
@@ -149,22 +154,25 @@ const styles = StyleSheet.create({
         color: 'black',
         fontFamily: 'DMSans-Regular',
         fontWeight: '400',
-        marginBottom: 20
+        marginVertical: 20
     },
     itemRating: {
+        gap: 3,
         flexDirection: 'row',
-        justifyContent: 'center'
+        alignItems: 'center'
     },
     cardRating: {
         flexDirection: 'row',
-        justifyContent: 'space-between'
+        alignItems: 'center',
     },
     cardMoney: {
-        marginLeft: 16
+        flex: 1,
     },
     imgProduct: {
-        width: 70,
-        height: 70
+        width: 80,
+        height: 80,
+        borderRadius: 10,
+        borderWidth: 1,
     },
     itemPopular: {
         width: 80,
@@ -172,12 +180,14 @@ const styles = StyleSheet.create({
         borderRadius: 10,
         backgroundColor: color.GreyLight1,
         justifyContent: 'center',
-        alignItems: 'center'
+        alignItems: 'center',
     },
     cardPopular: {
         width: '100%',
         height: 100,
-        flexDirection: 'row'
+        flexDirection: 'row',
+        alignItems: 'center',
+        gap: 16
     },
     txtHistory: {
         fontSize: 14,
@@ -240,77 +250,3 @@ const styles = StyleSheet.create({
         paddingHorizontal: 24
     }
 })
-
-//simple data 
-const dataHistory =
-    [
-        {
-            "id": 1,
-            "title": "on-ea"
-        }, {
-            "id": 2,
-            "title": "in-ea"
-        }, {
-            "id": 3,
-            "title": "TMA2 Wireless"
-        }, {
-            "id": 4,
-            "title": "Cable"
-        }, {
-            "id": 5,
-            "title": "TMA-2 Move Wireless"
-        }
-    ]
-//data popular
-const popularData =
-    [
-        {
-            "id": 1,
-            "image": "https://vn.jbl.com/dw/image/v2/AAUJ_PRD/on/demandware.static/-/Sites-masterCatalog_Harman/default/dw45c69ed4/JBL_TOUR_ONE_BLK_Hero.jpg?sw=270&sh=330&sm=fit&sfrm=png",
-            "name": "Mozard IP-878",
-            "price": 270,
-            "rating": 4.6,
-            "review": 10
-        },
-        {
-            "id": 2,
-            "image": "https://bizweb.dktcdn.net/100/445/497/products/3855bea1-137b-4394-bdbe-2af2682b06a1-jpg-v-1683792459683.png?v=1683864214557",
-            "name": "JBL Live 660NC",
-            "price": 120,
-            "rating": 3.5,
-            "review": 14
-        },
-        {
-            "id": 3,
-            "image": "https://bizweb.dktcdn.net/100/445/497/products/f5670b47-612b-4160-a1b2-3c9693371a5e.jpg?v=1680821388590",
-            "name": "Gaming JBL QUANTUM TWS",
-            "price": 242,
-            "rating": 3.2,
-            "review": 37
-        },
-        {
-            "id": 4,
-            "image": "https://bizweb.dktcdn.net/100/445/497/products/9328c3a4-a235-4180-8a45-971caa35fbb3.jpg?v=1680821650753",
-            "name": "JBL Tune 510BT",
-            "price": 79,
-            "rating": 4.8,
-            "review": 80
-        },
-        {
-            "id": 5,
-            "image": "https://bizweb.dktcdn.net/100/445/497/products/51555166-0820-41ee-97ee-27041a997d6a.jpg?v=1684318476290",
-            "name": "JBL Tune 750BTNC",
-            "price": 300,
-            "rating": 5.4,
-            "review": 47
-        },
-        {
-            "id": 6,
-            "image": "https://bizweb.dktcdn.net/100/445/497/products/746bd0f1-0767-49d7-afad-83ca63af1100.jpg?v=1683864470510",
-            "name": "JBL Live 460NC",
-            "price": 239,
-            "rating": 4.5,
-            "review": 60
-        }
-    ]
-

@@ -55,9 +55,7 @@ const ProductDetailScreen: React.FC<PropsType> = props => {
         });
     }
     const screenWidth = Dimensions.get('window').width;
-    const _detail = () => {
-        navigation.navigate('ProductDetailScreen');
-    }
+
     const _renderItemImage = ({ item }: { item: ProductImage }) => {
         return (
             <Image
@@ -68,8 +66,17 @@ const ProductDetailScreen: React.FC<PropsType> = props => {
             />
         );
     };
-    console.log('Image List:', detail.productImages);
+    
     const _renderItemMore = ({ item }: { item: Product }) => {
+        const _detail = () => {
+            navigation.push('ProductDetailScreen', {
+                productID: item._id,
+                productName: item.productName,
+                productImages: item.productImages,
+                productPrice: item.productPrice,
+                productReviews: item.productReviews
+            })
+        }
         return (
             <TouchableOpacity style={styles.sanpham} onPress={_detail}>
                 <View>
