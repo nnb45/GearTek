@@ -1,10 +1,10 @@
-import { ScrollView, StyleSheet, Text, View, TextInput, Image, Pressable, StatusBar } from 'react-native'
-import React from 'react'
 import { NativeStackScreenProps } from '@react-navigation/native-stack';
+import React from 'react';
+import { Image, Pressable, StyleSheet, Text, TextInput, View } from 'react-native';
+import { IC_BACK, IC_CARD, IC_NEXT, IC_PLUS, MASTERCARD, VISA } from '../../../assets/img';
+import Header from '../../components/Header/Header';
 import { HomeStackParamList } from '../../components/navigation/HomeStack';
 import { color } from '../../themes/theme';
-import Header from '../../components/Header/Header';
-import { IC_BACK, IC_CARD, IC_NEXT, IC_PLUS, MASTERCARD, VISA } from '../../../assets/img';
 
 type PropsType = NativeStackScreenProps<HomeStackParamList, 'PaymentMethodScreen'>;
 const PaymentMethodScreen: React.FC<PropsType> = props => {

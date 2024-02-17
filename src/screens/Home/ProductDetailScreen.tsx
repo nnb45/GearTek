@@ -1,16 +1,15 @@
-import { StyleSheet, Text, View, Dimensions, Image, ScrollView, FlatList, StatusBar, Pressable, TouchableOpacity, VirtualizedList } from 'react-native'
-// import { ScrollView } from 'react-native-virtualized-view'
-import React, { useEffect, useState } from 'react'
-import { NativeStackScreenProps } from '@react-navigation/native-stack';
-import Icon from 'react-native-vector-icons/FontAwesome';
-import Header from '../../components/Header/Header';
-import { IC_BACK, IMG_Product } from '../../../assets/img';
-import { HomeStackParamList } from '../../components/navigation/HomeStack';
-import { color } from '../../themes/theme';
-import { Product } from '../../domain/enity/product';
-import { useAppContext } from '../../components/context/AppContext';
+import { Dimensions, FlatList, Image, Pressable, ScrollView, StatusBar, StyleSheet, Text, TouchableOpacity, View } from 'react-native';
 import { useRoute } from '@react-navigation/native';
+import { NativeStackScreenProps } from '@react-navigation/native-stack';
 import axios from 'axios';
+import React, { useEffect, useState } from 'react';
+import Icon from 'react-native-vector-icons/FontAwesome';
+import { IC_BACK } from '../../../assets/img';
+import Header from '../../components/Header/Header';
+import { useAppContext } from '../../components/context/AppContext';
+import { HomeStackParamList } from '../../components/navigation/HomeStack';
+import { Product } from '../../domain/enity/product';
+import { color } from '../../themes/theme';
 
 interface Details {
     productID: string,

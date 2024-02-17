@@ -1,12 +1,11 @@
-import { Button, StyleSheet, Text, View, Image, TextInput, TouchableOpacity, ScrollView, FlatList, Pressable } from 'react-native'
-import React, { useEffect, useState } from 'react'
-import { NativeStackScreenProps } from '@react-navigation/native-stack';
-import { HomeStackParamList } from '../../components/navigation/HomeStack';
-import { color } from '../../themes/theme';
-import { IC_NEXT } from '../../../assets/img';
-import { Product } from '../../domain/enity/product';
-import { useAppContext } from '../../components/context/AppContext';
 import { RouteProp, useRoute } from '@react-navigation/native';
+import { NativeStackScreenProps } from '@react-navigation/native-stack';
+import React, { useEffect, useState } from 'react';
+import { FlatList, Image, Pressable, ScrollView, StyleSheet, Text, TextInput, TouchableOpacity, View } from 'react-native';
+import { useAppContext } from '../../components/context/AppContext';
+import { HomeStackParamList } from '../../components/navigation/HomeStack';
+import { Product } from '../../domain/enity/product';
+import { color } from '../../themes/theme';
 
 
 type PropsType = NativeStackScreenProps<HomeStackParamList, 'HomeScreen'>;

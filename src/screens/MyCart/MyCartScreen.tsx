@@ -1,10 +1,10 @@
-import { StyleSheet, Text, View, Image, TouchableOpacity, Alert, Pressable, FlatList, StatusBar } from 'react-native';
-import React, { useState } from 'react';
 import { NativeStackScreenProps } from '@react-navigation/native-stack';
+import React, { useState } from 'react';
+import { FlatList, Image, Pressable, StatusBar, StyleSheet, Text, TouchableOpacity, View } from 'react-native';
+import { BIN, DELETE, IC_BACK, IC_MINUS, IC_NEXT, IC_PLUS } from '../../../assets/img';
+import Header from '../../components/Header/Header';
 import { HomeStackParamList } from '../../components/navigation/HomeStack';
 import { color } from '../../themes/theme';
-import Header from '../../components/Header/Header';
-import { BIN, DELETE, IC_BACK, IC_MINUS, IC_NEXT, IC_PLUS } from '../../../assets/img';
 interface cartProps {
 
     id: number,
