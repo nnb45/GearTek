@@ -1,8 +1,9 @@
 export interface Product {
     _id: string,
     productName: string,
-    productImages: string[],
+    productImages: { image: string }[],
     productPrice: Number,
     productReviews: Number,
-    productRates: Number
+    productRates: Number,
+    quantity: any
 }

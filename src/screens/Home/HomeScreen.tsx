@@ -1,21 +1,12 @@
-import { Button, StyleSheet, Text, View, Image, TextInput, TouchableOpacity, ScrollView, FlatList, Pressable } from 'react-native'
-import React, { useEffect, useState } from 'react'
-import { NativeStackScreenProps } from '@react-navigation/native-stack';
-import { HomeStackParamList } from '../../components/navigation/HomeStack';
-import { color } from '../../themes/theme';
-import { IC_NEXT } from '../../../assets/img';
-import { Product } from '../../domain/enity/product';
-import { useAppContext } from '../../components/context/AppContext';
 import { RouteProp, useRoute } from '@react-navigation/native';
+import { NativeStackScreenProps } from '@react-navigation/native-stack';
+import React, { useEffect, useState } from 'react';
+import { FlatList, Image, Pressable, ScrollView, StyleSheet, Text, TextInput, TouchableOpacity, View } from 'react-native';
+import { useAppContext } from '../../components/context/AppContext';
+import { HomeStackParamList } from '../../components/navigation/HomeStack';
+import { Product } from '../../domain/enity/product';
+import { color } from '../../themes/theme';
 
-
-type PropsType = NativeStackScreenProps<HomeStackParamList, 'HomeScreen'>;
-//interface
-interface SanPham {
-    id: number,
-    avatar: string,
-    name: string,
-}
 
 //interface
 interface All {
@@ -23,28 +14,22 @@ interface All {
     name: string,
 }
 
-interface ID {
-    id: string,
-}
-
-
+type PropsType = NativeStackScreenProps<HomeStackParamList, 'HomeScreen'>;
 const HomeScreen: React.FC<PropsType> = props => {
     const { navigation } = props;
-    const route = useRoute<RouteProp<HomeStackParamList, 'HomeScreen'>>()
     const { products, setProducts } = useAppContext();
 
     const _explore = () => {
         navigation.navigate('ExploreScreen')
-    }
+    };
     const _search = () => {
         navigation.navigate('SearchScreen')
-    }
+    };
     const _profile = () => {
         navigation.navigate('ProfileScreen');
-    }
+    };
     const [all, setAll] = useState(IT)
     const [selectedIndex, setselectedIndex] = useState(1)// set mau chu 
-    const [sanpham, setSanpham] = useState(SANPHAM)
 
     const getProductList = async () => {
         try {
@@ -62,6 +47,7 @@ const HomeScreen: React.FC<PropsType> = props => {
 
     const renderList = ({ item }: { item: All }) => {
         const { id, name } = item
+
         return (
             <View style={{ marginRight: 10, marginVertical: 25 }}>
                 <Text style={{
@@ -81,18 +67,26 @@ const HomeScreen: React.FC<PropsType> = props => {
     }
 
     const renderSanpham = ({ item }: { item: Product }) => {
+        const _handleReiceipt = () => {
+            navigation.navigate('ReceiptScreen', {
+                productID: item._id,
+                productName: item.productName,
+                productPrice: item.productPrice,
+                productImages: item.productImages[0]
+            });
+        };
         return (
             <View style={styles.list}>
                 <View>
                     <Text style={styles.text} numberOfLines={3} ellipsizeMode='tail'>{item.productName}</Text>
-                    <TouchableOpacity style={styles.button} onPress={_explore}>
+                    <TouchableOpacity style={styles.button} onPress={_handleReiceipt}>
                         <Text style={styles.textBt}>Shop now</Text>
                     </TouchableOpacity>
                 </View>
 
                 <View>
                     {item.productImages && item.productImages.length > 0 && (
-                        <Image source={{ uri: item.productImages[0] }} style={styles.img} />
+                        <Image source={{ uri: item.productImages[0].image }} style={styles.img} />
                     )}
                 </View>
             </View>
@@ -110,7 +104,7 @@ const HomeScreen: React.FC<PropsType> = props => {
             <TouchableOpacity style={styles.sanpham} onPress={_detail}>
                 <View>
                     <Image
-                        source={{ uri: item.productImages[0] }}
+                        source={{ uri: item.productImages[0].image }}
                         style={styles.img}
                     />
                 </View>
@@ -123,8 +117,6 @@ const HomeScreen: React.FC<PropsType> = props => {
             </TouchableOpacity>
         )
     }
-
-
 
     return (
         <ScrollView style={styles.containerAll} showsVerticalScrollIndicator={false}>
@@ -179,8 +171,6 @@ const HomeScreen: React.FC<PropsType> = props => {
                             renderItem={renderList}
                         />
                     </View>
-
-
                     <View>
                         <FlatList
                             showsHorizontalScrollIndicator={false}
@@ -196,7 +186,8 @@ const HomeScreen: React.FC<PropsType> = props => {
                         <Text style={styles.Products}>
                             Featured Products
                         </Text>
-                        <TouchableOpacity>
+                        <TouchableOpacity
+                            onPress={_explore}>
                             <Text style={styles.infor}>See All</Text>
                         </TouchableOpacity>
                     </View>

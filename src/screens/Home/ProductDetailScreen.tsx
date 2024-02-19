@@ -1,23 +1,24 @@
-import { StyleSheet, Text, View, Dimensions, Image, ScrollView, FlatList, StatusBar, Pressable, TouchableOpacity, VirtualizedList } from 'react-native'
-// import { ScrollView } from 'react-native-virtualized-view'
-import React, { useEffect, useState } from 'react'
-import { NativeStackScreenProps } from '@react-navigation/native-stack';
-import Icon from 'react-native-vector-icons/FontAwesome';
-import Header from '../../components/Header/Header';
-import { IC_BACK, IMG_Product } from '../../../assets/img';
-import { HomeStackParamList } from '../../components/navigation/HomeStack';
-import { color } from '../../themes/theme';
-import { Product } from '../../domain/enity/product';
-import { useAppContext } from '../../components/context/AppContext';
+import { Dimensions, FlatList, Image, Pressable, ScrollView, StatusBar, StyleSheet, Text, TouchableOpacity, View } from 'react-native';
 import { useRoute } from '@react-navigation/native';
+import { NativeStackScreenProps } from '@react-navigation/native-stack';
 import axios from 'axios';
+import React, { useEffect, useState } from 'react';
+import Icon from 'react-native-vector-icons/FontAwesome';
+import { IC_BACK } from '../../../assets/img';
+import Header from '../../components/Header/Header';
+import { useAppContext } from '../../components/context/AppContext';
+import { HomeStackParamList } from '../../components/navigation/HomeStack';
+import { Product } from '../../domain/enity/product';
+import { color } from '../../themes/theme';
 
 interface Details {
     productID: string,
     productName: string,
-    productImages: ProductImage[];
+    productImages: ProductImage[],
     productPrice: string,
-    productReviews: string
+    productReviews: string,
+    productRates: string
+    quantity: any
 }
 type ProductImage = {
     key: string;
@@ -31,6 +32,21 @@ const ProductDetailScreen: React.FC<PropsType> = props => {
     const [images, setImages] = useState<ProductImage[]>();
     const route = useRoute();
     const { productID } = route.params as Details;
+    const [cart, setCart] = useState<Product[]>([]);
+    const [itemProduct, setItemProduct] = useState<Product[]>([]);
+
+    const addToCart = (product: Product) => {
+        const existingProductIndex = cart.findIndex(item => item._id === product._id);
+        if (existingProductIndex !== -1) {
+            // If the product already exists in the cart, increase the quantity
+            const newCart = [...cart];
+            newCart[existingProductIndex].quantity += 1;
+            setCart(newCart);
+        } else {
+            // If the product doesn't exist in the cart, add it with a quantity of 1
+            setCart([...cart, { ...product, quantity: 1 }]);
+        }
+    };
 
     useEffect(() => {
         const getProductInfo = async () => {
@@ -46,6 +62,7 @@ const ProductDetailScreen: React.FC<PropsType> = props => {
         }
         getProductInfo();
     }, []);
+
     const _handleReiceipt = () => {
         navigation.navigate('ReceiptScreen', {
             productID: productID,
@@ -53,7 +70,8 @@ const ProductDetailScreen: React.FC<PropsType> = props => {
             productPrice: detail.productPrice,
             productImages: detail.productImages
         });
-    }
+    };
+
     const screenWidth = Dimensions.get('window').width;
 
     const _renderItemImage = ({ item }: { item: ProductImage }) => {
@@ -66,7 +84,7 @@ const ProductDetailScreen: React.FC<PropsType> = props => {
             />
         );
     };
-    
+
     const _renderItemMore = ({ item }: { item: Product }) => {
         const _detail = () => {
             navigation.push('ProductDetailScreen', {
@@ -76,24 +94,33 @@ const ProductDetailScreen: React.FC<PropsType> = props => {
                 productPrice: item.productPrice,
                 productReviews: item.productReviews
             })
-        }
+        };
         return (
-            <TouchableOpacity style={styles.sanpham} onPress={_detail}>
-                <View>
-                    <Image
-                        source={{ uri: item.productImages[0] }}
-                        style={styles.img}
-                    />
-                </View>
-                <View>
-                    <Text style={styles.productName} ellipsizeMode='tail' numberOfLines={2}>{item.productName}</Text>
-                </View>
-                <View>
-                    <Text style={styles.infor}>USD {item.productPrice.toString()}</Text>
-                </View>
-            </TouchableOpacity>
+            <View>
+                <TouchableOpacity style={styles.sanpham} onPress={_detail}>
+                    <View>
+                        <Image
+                            source={{ uri: item.productImages[0].image }}
+                            style={styles.img}
+                        />
+                    </View>
+                    <View>
+                        <Text style={styles.productName} ellipsizeMode='tail' numberOfLines={2}>{item.productName}</Text>
+                    </View>
+                    <View>
+                        <Text style={styles.infor}>USD {item.productPrice.toString()}</Text>
+                    </View>
+                </TouchableOpacity>
+
+            </View>
         )
     }
+    const _cart = (item: Product) => {
+        addToCart(item);
+        console.log("Item added to Cart : ", item);
+        setCart([...cart, item]); // add item to cart state array
+        navigation.navigate("MyCartScreen", { cart: item });
+    };
 
     return (
         <View style={styles.container}>
@@ -204,7 +231,6 @@ const ProductDetailScreen: React.FC<PropsType> = props => {
                 </View>
                 <View style={{ flex: 1, flexDirection: 'row', justifyContent: 'space-between' }}>
                     <Text style={styles.categoryText}>Another Product</Text>
-                    <Text style={styles.categoryText}>See All</Text>
                 </View>
                 <View style={{ flex: 1, marginTop: 20, borderRadius: 10, backgroundColor: color.GreyLight1 }}>
                     <FlatList
@@ -215,9 +241,12 @@ const ProductDetailScreen: React.FC<PropsType> = props => {
                         showsHorizontalScrollIndicator={false}
                     />
                 </View>
-                <View style={{ marginVertical: 20, borderRadius: 10, height: 50 }}>
-                    <Pressable style={styles.btnAdd} onPress={_handleReiceipt}>
-                        <Text style={styles.txtAdd}>Buy now</Text>
+                <View style={styles.buttonRow}>
+                    <Pressable style={styles.btnAdd} onPress={() => _cart}>
+                        <Text style={styles.txtAdd}>Add to Cart</Text>
+                    </Pressable>
+                    <Pressable style={styles.btnBuy} onPress={_handleReiceipt}>
+                        <Text style={styles.txtBuy}>Buy now</Text>
                     </Pressable>
                 </View>
             </ScrollView>
@@ -335,6 +364,14 @@ const styles = StyleSheet.create({
         color: color.GreyDark1,
         marginTop: 20
     },
+    containerSanPham: {
+        justifyContent: 'center',
+        width: 155,
+        padding: 15,
+        backgroundColor: color.White,
+        margin: 10,
+        borderRadius: 15
+    },
     sanpham: {
         justifyContent: 'center',
         width: 155,
@@ -360,16 +397,33 @@ const styles = StyleSheet.create({
         fontFamily: 'DMSans-Regular',
         color: 'black'
     },
-    btnAdd: {
+    btnBuy: {
+        marginVertical: 20,
+        height: 50,
+        flex: 2,
         alignItems: 'center',
         backgroundColor: color.Primary,
         justifyContent: 'center',
-        borderRadius: 10,
-        height: 50
     },
-    txtAdd: {
+    txtBuy: {
         color: color.White,
         fontFamily: 'DMSans-Bold',
         fontSize: 16
+    },
+    btnAdd: {
+        marginVertical: 20,
+        height: 50,
+        flex: 1,
+        alignItems: 'center',
+        backgroundColor: color.Accent,
+        justifyContent: 'center',
+    },
+    txtAdd: {
+        color: color.Default,
+        fontFamily: 'DMSans-Bold',
+        fontSize: 16
+    },
+    buttonRow: {
+        flexDirection: 'row',
     }
 });
