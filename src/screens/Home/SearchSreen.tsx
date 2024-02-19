@@ -1,16 +1,13 @@
-import { FlatList, Image, StatusBar, StyleSheet, Text, TextInput, TouchableOpacity, View } from 'react-native'
-import React, { useCallback, useState } from 'react'
 import { NativeStackScreenProps } from '@react-navigation/native-stack';
-import { HomeStackParamList } from '../../components/navigation/HomeStack';
-import { color } from '../../themes/theme';
-import { ClockIcons, LeftIcons, MoreIconVertical, SearchIcons, StartIcons, XIcons } from '../../../assets/icons';
-import Header from '../../components/Header/Header';
-import { Cart_Icon, IC_BACK, IC_MORE, IC_STAR } from '../../../assets/img';
 import axios from 'axios';
+import React, { useCallback, useState } from 'react';
+import { FlatList, Image, StatusBar, StyleSheet, Text, TextInput, TouchableOpacity, View } from 'react-native';
+import { SearchIcons } from '../../../assets/icons';
+import { Cart_Icon, IC_BACK, IC_MORE, IC_STAR } from '../../../assets/img';
+import Header from '../../components/Header/Header';
+import { HomeStackParamList } from '../../components/navigation/HomeStack';
 import { Product } from '../../domain/enity/product';
-
-
-
+import { color } from '../../themes/theme';
 
 type PropsType = NativeStackScreenProps<HomeStackParamList, 'SearchScreen'>;
 const SearchScreen: React.FC<PropsType> = props => {

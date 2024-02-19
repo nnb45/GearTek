@@ -1,13 +1,13 @@
-import { FlatList, StyleSheet, Text, TouchableOpacity, View, Image, Dimensions, StatusBar } from 'react-native'
-import React, { useEffect, useState } from 'react'
 import { NativeStackScreenProps } from '@react-navigation/native-stack';
-import { HomeStackParamList } from '../../components/navigation/HomeStack';
-import { color } from '../../themes/theme';
-import { MoreIconVertical, SliderIcons, StartIcons } from '../../../assets/icons';
+import React, { useEffect, useState } from 'react';
+import { FlatList, Image, StatusBar, StyleSheet, Text, TouchableOpacity, View } from 'react-native';
+import { SliderIcons, StartIcons } from '../../../assets/icons';
+import { IC_BACK, IC_CART } from '../../../assets/img';
 import Header from '../../components/Header/Header';
-import { Cart_Icon, IC_BACK, IC_CART } from '../../../assets/img';
 import { useAppContext } from '../../components/context/AppContext';
+import { HomeStackParamList } from '../../components/navigation/HomeStack';
 import { Product } from '../../domain/enity/product';
+import { color } from '../../themes/theme';
 type PropsType = NativeStackScreenProps<HomeStackParamList, 'ExploreScreen'>;
 
 //interface

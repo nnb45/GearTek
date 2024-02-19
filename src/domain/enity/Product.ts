@@ -4,5 +4,6 @@ export interface Product {
     productImages: string[],
     productPrice: Number,
     productReviews: Number,
-    productRates: Number
+    productRates: Number,
+    quantity: any
 }

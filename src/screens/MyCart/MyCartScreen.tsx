@@ -1,12 +1,12 @@
-import { StyleSheet, Text, View, Image, TouchableOpacity, Alert, Pressable, FlatList, StatusBar } from 'react-native';
-import React, { useState } from 'react';
 import { NativeStackScreenProps } from '@react-navigation/native-stack';
+import React, { useState } from 'react';
+import { FlatList, Image, Pressable, StatusBar, StyleSheet, Text, TouchableOpacity, View } from 'react-native';
+import { BIN, DELETE, IC_BACK, IC_MINUS, IC_NEXT, IC_PLUS } from '../../../assets/img';
+import Header from '../../components/Header/Header';
 import { HomeStackParamList } from '../../components/navigation/HomeStack';
 import { color } from '../../themes/theme';
-import Header from '../../components/Header/Header';
-import { BIN, DELETE, IC_BACK, IC_MINUS, IC_NEXT, IC_PLUS } from '../../../assets/img';
 interface cartProps {
-
+    quantity: any,
     id: number,
     name: string,
     image: string,
@@ -14,20 +14,26 @@ interface cartProps {
 }
 type PropsType = NativeStackScreenProps<HomeStackParamList, 'MyCartScreen'>;
 const MyCartScreen: React.FC<PropsType> = props => {
-    const { navigation } = props
+    const { navigation } = props;
+    const [cartData, setCartData] = useState<cartProps[]>([]);
+
     const _handleCheckout = () => {
         navigation.navigate('ReceiptScreen')
     }
     const [quantity, setQuantity] = useState<number>(1);
 
-    const decreaseQuantity = () => {
-        if (quantity > 1) {
-            setQuantity(quantity - 1);
-        }
+    const decreaseQuantity = (item: cartProps, cartData: cartProps[]) => {
+        const newCartData = cartData.map((i) =>
+            i.id === item.id ? { ...i, quantity: i.quantity - 1 } : i
+        );
+        setCartData(newCartData);
     };
 
-    const increaseQuantity = () => {
-        setQuantity(quantity + 1);
+    const increaseQuantity = (item: cartProps, cartData: cartProps[]) => {
+        const newCartData = cartData.map((i) =>
+            i.id === item.id ? { ...i, quantity: i.quantity + 1 } : i
+        );
+        setCartData(newCartData);
     };
     //item cart
     const _itemCart = ({ item }: { item: cartProps }) => {
@@ -43,11 +49,11 @@ const MyCartScreen: React.FC<PropsType> = props => {
                         <Text style={styles.price}>{item.price} USD</Text>
                         <View style={styles.itemOption}>
                             <View style={styles.quantityControl}>
-                                <TouchableOpacity style={styles.quantityButton} onPress={decreaseQuantity}>
+                                <TouchableOpacity style={styles.quantityButton} onPress={() => decreaseQuantity(item, cartData)}>
                                     <Image style={styles.quantityIcon} source={IC_MINUS} />
                                 </TouchableOpacity>
                                 <Text style={styles.quantity}>{quantity}</Text>
-                                <TouchableOpacity style={styles.quantityButton} onPress={increaseQuantity}>
+                                <TouchableOpacity style={styles.quantityButton} onPress={() => increaseQuantity(item, cartData)}>
                                     <Image style={styles.quantityIcon} source={IC_PLUS} />
                                 </TouchableOpacity>
                             </View>
@@ -77,9 +83,9 @@ const MyCartScreen: React.FC<PropsType> = props => {
                 barStyle={'dark-content'}
                 backgroundColor={'transparent'} />
             <FlatList
-                data={popularData}
+                data={cartData}
                 renderItem={_itemCart}
-                showsHorizontalScrollIndicator={true}
+                showsHorizontalScrollIndicator={false}
                 ListHeaderComponent={_listHeader} />
             <View style={styles.confirm}>
                 <View style={styles.totalPrice}>
@@ -193,23 +199,3 @@ const styles = StyleSheet.create({
         fontSize: 14
     }
 });
-const popularData =
-    [
-        {
-            "id": 1,
-            "image": "https://vn.jbl.com/dw/image/v2/AAUJ_PRD/on/demandware.static/-/Sites-masterCatalog_Harman/default/dw45c69ed4/JBL_TOUR_ONE_BLK_Hero.jpg?sw=270&sh=330&sm=fit&sfrm=png",
-            "name": "Mozard IP-878",
-            "price": 270,
-            "rating": 4.6,
-            "review": 10,
-        },
-        {
-            "id": 2,
-            "image": "https://bizweb.dktcdn.net/100/445/497/products/3855bea1-137b-4394-bdbe-2af2682b06a1-jpg-v-1683792459683.png?v=1683864214557",
-            "name": "JBL Live 660NC",
-            "price": 120,
-            "rating": 3.5,
-            "review": 14,
-        },
-
-    ]

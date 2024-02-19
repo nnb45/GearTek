@@ -1,12 +1,12 @@
-import { FlatList, Image, Pressable, StatusBar, StyleSheet, Text, TouchableOpacity, View } from 'react-native'
-import { ScrollView } from 'react-native-virtualized-view'
-import React, { useEffect, useState } from 'react'
-import { color } from '../../themes/theme'
-import { NativeStackScreenProps } from '@react-navigation/native-stack';
-import { HomeStackParamList } from '../../components/navigation/HomeStack';
-import Header from '../../components/Header/Header';
-import { DELETE, IC_BACK, IC_CARD, IC_CART, IC_LOCATION, IC_NEXT, IC_ORDER, IC_WALLET } from '../../../assets/img';
 import { useRoute } from '@react-navigation/native';
+import { NativeStackScreenProps } from '@react-navigation/native-stack';
+import React from 'react';
+import { FlatList, Image, Pressable, StatusBar, StyleSheet, Text, View } from 'react-native';
+import { ScrollView } from 'react-native-virtualized-view';
+import { DELETE, IC_BACK, IC_CARD, IC_CART, IC_LOCATION, IC_NEXT, IC_ORDER, IC_WALLET } from '../../../assets/img';
+import Header from '../../components/Header/Header';
+import { HomeStackParamList } from '../../components/navigation/HomeStack';
+import { color } from '../../themes/theme';
 
 interface Detail {
    productID: string;

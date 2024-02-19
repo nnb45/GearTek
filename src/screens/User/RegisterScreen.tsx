@@ -1,10 +1,9 @@
-import { StyleSheet, Text, View, TouchableOpacity, TextInput, Image, ImageBackground, StatusBar } from 'react-native'
-import React, { useContext, useState } from 'react'
 import { NativeStackScreenProps } from '@react-navigation/native-stack';
+import React, { useState } from 'react';
+import { Image, ImageBackground, StatusBar, StyleSheet, Text, TextInput, TouchableOpacity, View } from 'react-native';
+import { KeyboardAwareScrollView } from 'react-native-keyboard-aware-scroll-view';
 import { LoginStackParamList } from '../../components/navigation/LoginStack';
 import { color } from '../../themes/theme';
-import { KeyboardAwareScrollView } from 'react-native-keyboard-aware-scroll-view';
-import { AppContext } from '../../components/context/AppContext';
 
 type PropsType = NativeStackScreenProps<LoginStackParamList, 'RegisterScreen'>;
 const RegisterScreen: React.FC<PropsType> = props => {
