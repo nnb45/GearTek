@@ -1,11 +1,11 @@
-import { FlatList, Image, Pressable, StatusBar, StyleSheet, Text, TouchableOpacity, View } from 'react-native'
-import React, { useState } from 'react'
 import { NativeStackScreenProps } from '@react-navigation/native-stack';
+import React, { useState } from 'react';
+import { FlatList, Image, Pressable, StatusBar, StyleSheet, Text, TouchableOpacity, View } from 'react-native';
+import { StartIcons } from '../../../assets/icons';
+import { IC_BACK } from '../../../assets/img';
+import Header from '../../components/Header/Header';
 import { WishStackParamList } from '../../components/navigation/WishStack';
 import { color } from '../../themes/theme';
-import Header from '../../components/Header/Header';
-import { IC_BACK } from '../../../assets/img';
-import { MoreIconVertical, StartIcons } from '../../../assets/icons';
 
 type PropsType = NativeStackScreenProps<WishStackParamList, 'WishScreen'>;
 
