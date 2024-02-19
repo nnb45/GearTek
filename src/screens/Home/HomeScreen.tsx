@@ -86,7 +86,7 @@ const HomeScreen: React.FC<PropsType> = props => {
 
                 <View>
                     {item.productImages && item.productImages.length > 0 && (
-                        <Image source={{ uri: item.productImages[0] }} style={styles.img} />
+                        <Image source={{ uri: item.productImages[0].image }} style={styles.img} />
                     )}
                 </View>
             </View>
@@ -104,7 +104,7 @@ const HomeScreen: React.FC<PropsType> = props => {
             <TouchableOpacity style={styles.sanpham} onPress={_detail}>
                 <View>
                     <Image
-                        source={{ uri: item.productImages[0] }}
+                        source={{ uri: item.productImages[0].image }}
                         style={styles.img}
                     />
                 </View>
@@ -117,8 +117,6 @@ const HomeScreen: React.FC<PropsType> = props => {
             </TouchableOpacity>
         )
     }
-
-
 
     return (
         <ScrollView style={styles.containerAll} showsVerticalScrollIndicator={false}>
@@ -173,8 +171,6 @@ const HomeScreen: React.FC<PropsType> = props => {
                             renderItem={renderList}
                         />
                     </View>
-
-
                     <View>
                         <FlatList
                             showsHorizontalScrollIndicator={false}
@@ -190,7 +186,8 @@ const HomeScreen: React.FC<PropsType> = props => {
                         <Text style={styles.Products}>
                             Featured Products
                         </Text>
-                        <TouchableOpacity>
+                        <TouchableOpacity
+                            onPress={_explore}>
                             <Text style={styles.infor}>See All</Text>
                         </TouchableOpacity>
                     </View>

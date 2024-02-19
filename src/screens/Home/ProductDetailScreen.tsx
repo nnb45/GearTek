@@ -14,7 +14,7 @@ import { color } from '../../themes/theme';
 interface Details {
     productID: string,
     productName: string,
-    productImages: ProductImage[];
+    productImages: ProductImage[],
     productPrice: string,
     productReviews: string,
     productRates: string
@@ -95,22 +95,24 @@ const ProductDetailScreen: React.FC<PropsType> = props => {
                 productReviews: item.productReviews
             })
         };
-
         return (
-            <TouchableOpacity style={styles.sanpham} onPress={_detail}>
-                <View>
-                    <Image
-                        source={{ uri: item.productImages[0] }}
-                        style={styles.img}
-                    />
-                </View>
-                <View>
-                    <Text style={styles.productName} ellipsizeMode='tail' numberOfLines={2}>{item.productName}</Text>
-                </View>
-                <View>
-                    <Text style={styles.infor}>USD {item.productPrice.toString()}</Text>
-                </View>
-            </TouchableOpacity>
+            <View>
+                <TouchableOpacity style={styles.sanpham} onPress={_detail}>
+                    <View>
+                        <Image
+                            source={{ uri: item.productImages[0].image }}
+                            style={styles.img}
+                        />
+                    </View>
+                    <View>
+                        <Text style={styles.productName} ellipsizeMode='tail' numberOfLines={2}>{item.productName}</Text>
+                    </View>
+                    <View>
+                        <Text style={styles.infor}>USD {item.productPrice.toString()}</Text>
+                    </View>
+                </TouchableOpacity>
+
+            </View>
         )
     }
     const _cart = (item: Product) => {
@@ -361,6 +363,14 @@ const styles = StyleSheet.create({
         fontFamily: 'DMSans-Regular',
         color: color.GreyDark1,
         marginTop: 20
+    },
+    containerSanPham: {
+        justifyContent: 'center',
+        width: 155,
+        padding: 15,
+        backgroundColor: color.White,
+        margin: 10,
+        borderRadius: 15
     },
     sanpham: {
         justifyContent: 'center',

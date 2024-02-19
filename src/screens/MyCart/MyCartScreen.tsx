@@ -5,6 +5,7 @@ import { BIN, DELETE, IC_BACK, IC_MINUS, IC_NEXT, IC_PLUS } from '../../../asset
 import Header from '../../components/Header/Header';
 import { HomeStackParamList } from '../../components/navigation/HomeStack';
 import { color } from '../../themes/theme';
+import { useRoute } from '@react-navigation/native';
 interface cartProps {
     quantity: any,
     id: number,
