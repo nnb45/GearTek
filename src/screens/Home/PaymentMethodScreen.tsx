@@ -5,12 +5,27 @@ import { IC_BACK, IC_CARD, IC_NEXT, IC_PLUS, MASTERCARD, VISA } from '../../../a
 import Header from '../../components/Header/Header';
 import { HomeStackParamList } from '../../components/navigation/HomeStack';
 import { color } from '../../themes/theme';
+import { useRoute } from '@react-navigation/native';
+
+interface Detail {
+    productID: string;
+    productName: string;
+    productPrice: number;
+    productImages: { image: string }[];
+}
 
 type PropsType = NativeStackScreenProps<HomeStackParamList, 'PaymentMethodScreen'>;
 const PaymentMethodScreen: React.FC<PropsType> = props => {
     const { navigation } = props;
+    const route = useRoute();
+    const { productID, productName, productPrice, productImages } = route.params as Detail
     const _handleSelect = () => {
-        navigation.navigate('ReceiptScreen')
+        navigation.navigate('ReceiptScreen', {
+            productID: productID,
+            productName: productName,
+            productPrice: productPrice,
+            productImages: productImages
+        })
     }
     return (
         <View style={styles.container}>

@@ -87,7 +87,7 @@ const ExploreScreen: React.FC<PropsType> = props => {
         return (
             <View style={styles.cardProduct}>
                 {item.productImages && item.productImages.length > 0 && (
-                    <Image source={{ uri: item.productImages[0] }} style={styles.imgProduct} resizeMode='center' />
+                    <Image source={{ uri: item.productImages[0].image }} style={styles.imgProduct} resizeMode='center' />
                 )}
 
                 <View style={styles.cardMoney}>

@@ -1,14 +1,15 @@
-import React from 'react'
 import { createNativeStackNavigator } from '@react-navigation/native-stack';
-import HomeScreen from '../../screens/Home/HomeScreen';
-import SearchScreen from '../../screens/Home/SearchSreen';
+import React from 'react';
 import ExploreScreen from '../../screens/Home/ExploreScreen';
-import ProductDetailScreen from '../../screens/Home/ProductDetailScreen';
+import HomeScreen from '../../screens/Home/HomeScreen';
 import PaymentMethodScreen from '../../screens/Home/PaymentMethodScreen';
-import ProfileScreen from '../../screens/Profile/ProfileScreen';
 import PaymentStatusScreen from '../../screens/Home/PaymentStatusScreen';
-import MyCartScreen from '../../screens/MyCart/MyCartScreen';
+import ProductDetailScreen from '../../screens/Home/ProductDetailScreen';
+import ReceiptProductScreen from '../../screens/Home/ReceiptProductScreen';
 import ReceiptScreen from '../../screens/Home/ReceiptScreen';
+import SearchScreen from '../../screens/Home/SearchSreen';
+import MyCartScreen from '../../screens/MyCart/MyCartScreen';
+import ProfileScreen from '../../screens/Profile/ProfileScreen';
 
 
 type HomeScreenProps = {};
@@ -20,6 +21,8 @@ type MyCartScreenProps = {};
 type PaymentMethodScreenProps = {};
 type PaymentStatusScreenProps = {};
 type ReceiptScreenProps = {};
+type ReceiptProductScreenProps = {};
+
 
 export type HomeStackParamList = {
     HomeScreen: HomeScreenProps | undefined;
@@ -31,6 +34,7 @@ export type HomeStackParamList = {
     PaymentMethodScreen: PaymentMethodScreenProps | undefined;
     PaymentStatusScreen: PaymentStatusScreenProps | undefined;
     ReceiptScreen: ReceiptScreenProps | undefined;
+    ReceiptProductScreen: ReceiptProductScreenProps | undefined;
 };
 
 const Stack = createNativeStackNavigator<HomeStackParamList>();
@@ -51,6 +55,7 @@ const HomeStack = () => {
             <Stack.Screen name="PaymentStatusScreen" component={PaymentStatusScreen} />
             <Stack.Screen name="ReceiptScreen" component={ReceiptScreen} />
             <Stack.Screen name="MyCartScreen" component={MyCartScreen} />
+            <Stack.Screen name="ReceiptProductScreen" component={ReceiptProductScreen} />
         </Stack.Navigator >
     )
 }
