@@ -41,7 +41,7 @@ const SearchScreen: React.FC<PropsType> = props => {
                 <View style={styles.itemPopular}>
                     <Image
                         style={styles.imgProduct}
-                        source={{ uri: item.productImages[0].image }} />
+                        source={{ uri: item.productImages[0] }} />
                 </View>
                 <View style={styles.cardMoney}>
                     <Text style={styles.txtNameProduct} numberOfLines={1} ellipsizeMode='tail'>{item.productName}</Text>
