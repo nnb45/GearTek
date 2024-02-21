@@ -32,21 +32,8 @@ const ProductDetailScreen: React.FC<PropsType> = props => {
     const [images, setImages] = useState<ProductImage[]>();
     const route = useRoute();
     const { productID } = route.params as Details;
-    const [cart, setCart] = useState<Product[]>([]);
-    const [itemProduct, setItemProduct] = useState<Product[]>([]);
+    const { addToCart, cart, setCart } = useAppContext();
 
-    const addToCart = (product: Product) => {
-        const existingProductIndex = cart.findIndex(item => item._id === product._id);
-        if (existingProductIndex !== -1) {
-            // If the product already exists in the cart, increase the quantity
-            const newCart = [...cart];
-            newCart[existingProductIndex].quantity += 1;
-            setCart(newCart);
-        } else {
-            // If the product doesn't exist in the cart, add it with a quantity of 1
-            setCart([...cart, { ...product, quantity: 1 }]);
-        }
-    };
 
     useEffect(() => {
         const getProductInfo = async () => {
@@ -96,24 +83,24 @@ const ProductDetailScreen: React.FC<PropsType> = props => {
             });
         };
         return (
-                <TouchableOpacity style={styles.sanpham} onPress={_detail}>
-                    <View>
-                        <Image
-                            source={{ uri: item.productImages[0].image }}
-                            style={styles.img}
-                        />
-                    </View>
-                    <View>
-                        <Text style={styles.productName} ellipsizeMode='tail' numberOfLines={2}>{item.productName}</Text>
-                    </View>
-                    <View>
-                        <Text style={styles.infor}>USD {item.productPrice.toString()}</Text>
-                    </View>
-                </TouchableOpacity>
+            <TouchableOpacity style={styles.sanpham} onPress={_detail}>
+                <View>
+                    <Image
+                        source={{ uri: item.productImages[0].image }}
+                        style={styles.img}
+                    />
+                </View>
+                <View>
+                    <Text style={styles.productName} ellipsizeMode='tail' numberOfLines={2}>{item.productName}</Text>
+                </View>
+                <View>
+                    <Text style={styles.infor}>USD {item.productPrice.toString()}</Text>
+                </View>
+            </TouchableOpacity>
         )
     };
 
-    const footerComponent = ({ item }: { item: Product }) => {
+    const footerComponent = ({ item, cart }: { item: Product, cart: Product[] }) => {
         const _cart = () => {
             addToCart(item);
             console.log("Item added to Cart : ", item);
@@ -122,7 +109,7 @@ const ProductDetailScreen: React.FC<PropsType> = props => {
         };
         return (
             <View style={styles.buttonRow}>
-                <Pressable style={styles.btnAdd} onPress={() => _cart}>
+                <Pressable style={styles.btnAdd} onPress={_cart}>
                     <Text style={styles.txtAdd}>Add to Cart</Text>
                 </Pressable>
                 <Pressable style={styles.btnBuy} onPress={_handleReiceipt}>
@@ -160,7 +147,7 @@ const ProductDetailScreen: React.FC<PropsType> = props => {
                         keyExtractor={(item) => item.key}
                         horizontal={true}
                         showsHorizontalScrollIndicator={false}
-                        ListFooterComponent={footerComponent}
+                        ListFooterComponent={(item) => footerComponent({ item, cart })}
                     />
                 </View>
                 <Text style={styles.reviewText}>Review ({detail.productReviews})</Text>
@@ -403,8 +390,8 @@ const styles = StyleSheet.create({
     },
     btnBuy: {
         marginVertical: 20,
-        height: 50,
-        flex: 2,
+        borderRadius: 10,
+        flex: 1,
         alignItems: 'center',
         backgroundColor: color.Primary,
         justifyContent: 'center',
@@ -416,7 +403,8 @@ const styles = StyleSheet.create({
     },
     btnAdd: {
         marginVertical: 20,
-        height: 50,
+        width: 'auto',
+        borderRadius: 10,
         flex: 1,
         alignItems: 'center',
         backgroundColor: color.Accent,
@@ -428,6 +416,8 @@ const styles = StyleSheet.create({
         fontSize: 16
     },
     buttonRow: {
-        flexDirection: 'row',
+        flex: 1,
+        width: 200,
+        flexDirection: 'column',
     }
 });

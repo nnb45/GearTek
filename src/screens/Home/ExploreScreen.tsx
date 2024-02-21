@@ -87,7 +87,7 @@ const ExploreScreen: React.FC<PropsType> = props => {
         return (
             <View style={styles.cardProduct}>
                 {item.productImages && item.productImages.length > 0 && (
-                    <Image source={{ uri: item.productImages[0].image }} style={styles.imgProduct} resizeMode='center' />
+                    <Image source={{ uri: item.productImages[0].image }} style={styles.imgProduct} resizeMode='cover' />
                 )}
 
                 <View style={styles.cardMoney}>
@@ -216,7 +216,8 @@ const styles = StyleSheet.create({
     imgProduct: {
         width: 120,
         height: 120,
-        alignItems: 'center'
+        alignItems: 'center',
+        borderRadius: 10
     },
     cardProduct: {
         width: 160,

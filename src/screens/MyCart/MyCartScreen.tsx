@@ -6,18 +6,25 @@ import Header from '../../components/Header/Header';
 import { HomeStackParamList } from '../../components/navigation/HomeStack';
 import { color } from '../../themes/theme';
 import { useRoute } from '@react-navigation/native';
+import { Product } from '../../domain/enity/product';
+import { useAppContext } from '../../components/context/AppContext';
 interface cartProps {
-    quantity: any,
-    id: number,
-    name: string,
-    image: string,
-    price: number,
+    _id: string;
+    productName: string;
+    productImages: { image: string }[];
+    productPrice: number;
+    productReviews: number;
+    productRates: number;
+    quantity: number;
+    cart: Product[];
 }
+
 type PropsType = NativeStackScreenProps<HomeStackParamList, 'MyCartScreen'>;
 const MyCartScreen: React.FC<PropsType> = props => {
     const { navigation } = props;
+    const route = useRoute<any>();
+    const { cart } = useAppContext();
     const [cartData, setCartData] = useState<cartProps[]>([]);
-
     const _handleCheckout = () => {
         navigation.navigate('ReceiptScreen')
     }
@@ -25,14 +32,14 @@ const MyCartScreen: React.FC<PropsType> = props => {
 
     const decreaseQuantity = (item: cartProps, cartData: cartProps[]) => {
         const newCartData = cartData.map((i) =>
-            i.id === item.id ? { ...i, quantity: i.quantity - 1 } : i
+            i._id === item._id ? { ...i, quantity: i.quantity - 1 } : i
         );
         setCartData(newCartData);
     };
 
     const increaseQuantity = (item: cartProps, cartData: cartProps[]) => {
         const newCartData = cartData.map((i) =>
-            i.id === item.id ? { ...i, quantity: i.quantity + 1 } : i
+            i._id === item._id ? { ...i, quantity: i.quantity + 1 } : i
         );
         setCartData(newCartData);
     };
@@ -42,18 +49,18 @@ const MyCartScreen: React.FC<PropsType> = props => {
             <View style={styles.item}>
                 <View style={styles.itemImage}>
                     <Image
-                        source={{ uri: item.image }}
+                        source={{ uri: item.productImages[0].image }}
                         style={styles.image}
                     />
                     <View style={styles.itemInfo}>
-                        <Text style={styles.name}>{item.name}</Text>
-                        <Text style={styles.price}>{item.price} USD</Text>
+                        <Text style={styles.name}>{item.productName}</Text>
+                        <Text style={styles.price}>{item.productPrice} USD</Text>
                         <View style={styles.itemOption}>
                             <View style={styles.quantityControl}>
                                 <TouchableOpacity style={styles.quantityButton} onPress={() => decreaseQuantity(item, cartData)}>
                                     <Image style={styles.quantityIcon} source={IC_MINUS} />
                                 </TouchableOpacity>
-                                <Text style={styles.quantity}>{quantity}</Text>
+                                <Text style={styles.quantity}>{item.quantity}</Text>
                                 <TouchableOpacity style={styles.quantityButton} onPress={() => increaseQuantity(item, cartData)}>
                                     <Image style={styles.quantityIcon} source={IC_PLUS} />
                                 </TouchableOpacity>
@@ -83,11 +90,15 @@ const MyCartScreen: React.FC<PropsType> = props => {
             <StatusBar
                 barStyle={'dark-content'}
                 backgroundColor={'transparent'} />
-            <FlatList
-                data={cartData}
-                renderItem={_itemCart}
-                showsHorizontalScrollIndicator={false}
-                ListHeaderComponent={_listHeader} />
+            {cart && (
+                <FlatList
+                    data={cartData}
+                    renderItem={_itemCart}
+                    showsHorizontalScrollIndicator={false}
+                    ListHeaderComponent={_listHeader}
+                    keyExtractor={(item) => item._id}
+                />
+            )}
             <View style={styles.confirm}>
                 <View style={styles.totalPrice}>
                     <Text style={styles.body}>Total Price</Text>
