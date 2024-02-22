@@ -20,15 +20,23 @@ const ReceiptScreen: React.FC<PropsType> = props => {
    const { navigation } = props;
    const route = useRoute();
    const { productID, productName, productPrice, productImages } = route.params as Detail
-   // Use the received parameters as needed
-   // ...
-   // Example usage:
-   console.log('>>>>>>>>>>>> Receive data: ',productID, productName, productImages, productPrice)
+
+   console.log('>>>>>>>>>>>> Receive data: ', productID, productName, productImages, productPrice)
    const _handlePayment = () => {
-      navigation.navigate('PaymentMethodScreen')
+      navigation.navigate('PaymentMethodScreen', {
+         productID: productID,
+         productName: productName,
+         productPrice: productPrice,
+         productImages: productImages
+      })
    }
    const _handleCheckout = () => {
-      navigation.navigate('PaymentStatusScreen')
+      navigation.navigate('PaymentStatusScreen', {
+         productID: productID,
+         productName: productName,
+         productPrice: productPrice,
+         productImages: productImages
+      })
    }
    const calculateShippingCost = (productPrice: number): number => Math.round(parseFloat((productPrice * 0.1).toFixed(2)));
    const calculateTotalPrice = (productPrice: number): number => productPrice + calculateShippingCost(productPrice)
@@ -36,10 +44,9 @@ const ReceiptScreen: React.FC<PropsType> = props => {
    const _itemOrder = ({ item }: { item: Detail }) => {
       return (
          <View style={styles.orderItem}>
-            {/* <Image source={{ uri: item.productImages }} style={styles.imgProduct} /> */}
             {item.productImages && item.productImages.length > 0 && (
                <Image source={{ uri: item.productImages[0].image }}
-                  style={styles.imgProduct} resizeMode='center' />
+                  style={styles.imgProduct} resizeMode='cover' />
             )}
             <View style={styles.infoProduct}>
                <Text style={styles.productName} numberOfLines={1} ellipsizeMode="tail">{item.productName}</Text>

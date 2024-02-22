@@ -1,15 +1,31 @@
-import { Image, Pressable, StatusBar, StyleSheet, Text, TouchableOpacity, View } from 'react-native'
-import React from 'react'
-import { color } from '../../themes/theme'
+import { useRoute } from '@react-navigation/native';
 import { NativeStackScreenProps } from '@react-navigation/native-stack';
+import React from 'react';
+import { Image, Pressable, StatusBar, StyleSheet, Text, TouchableOpacity, View } from 'react-native';
 import { HomeStackParamList } from '../../components/navigation/HomeStack';
+import { color } from '../../themes/theme';
+
+interface Detail {
+   productID: string;
+   productName: string;
+   productPrice: number;
+   productImages: { image: string }[];
+}
 
 type PropsType = NativeStackScreenProps<HomeStackParamList, 'PaymentStatusScreen'>;
-
 const PaymentStatusScreen: React.FC<PropsType> = props => {
    const { navigation } = props;
+   const route = useRoute();
+   const { productID, productName, productPrice, productImages } = route.params as Detail
+
+
    const _handleReceipt = () => {
-      navigation.navigate('ReceiptScreen')
+      navigation.navigate('ReceiptProductScreen', {
+         productID: productID,
+         productName: productName,
+         productPrice: productPrice,
+         productImages: productImages
+      })
    }
    const _handleHome = () => {
       navigation.navigate('HomeScreen')

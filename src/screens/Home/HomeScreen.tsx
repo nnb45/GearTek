@@ -72,7 +72,7 @@ const HomeScreen: React.FC<PropsType> = props => {
                 productID: item._id,
                 productName: item.productName,
                 productPrice: item.productPrice,
-                productImages: item.productImages[0]
+                productImages: item.productImages
             });
         };
         return (

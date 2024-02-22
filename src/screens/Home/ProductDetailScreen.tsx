@@ -93,10 +93,9 @@ const ProductDetailScreen: React.FC<PropsType> = props => {
                 productImages: item.productImages,
                 productPrice: item.productPrice,
                 productReviews: item.productReviews
-            })
+            });
         };
         return (
-            <View>
                 <TouchableOpacity style={styles.sanpham} onPress={_detail}>
                     <View>
                         <Image
@@ -111,16 +110,28 @@ const ProductDetailScreen: React.FC<PropsType> = props => {
                         <Text style={styles.infor}>USD {item.productPrice.toString()}</Text>
                     </View>
                 </TouchableOpacity>
+        )
+    };
 
+    const footerComponent = ({ item }: { item: Product }) => {
+        const _cart = () => {
+            addToCart(item);
+            console.log("Item added to Cart : ", item);
+            setCart([...cart, item]); // add item to cart state array
+            navigation.navigate("MyCartScreen", { cart: item });
+        };
+        return (
+            <View style={styles.buttonRow}>
+                <Pressable style={styles.btnAdd} onPress={() => _cart}>
+                    <Text style={styles.txtAdd}>Add to Cart</Text>
+                </Pressable>
+                <Pressable style={styles.btnBuy} onPress={_handleReiceipt}>
+                    <Text style={styles.txtBuy}>Buy now</Text>
+                </Pressable>
             </View>
         )
     }
-    const _cart = (item: Product) => {
-        addToCart(item);
-        console.log("Item added to Cart : ", item);
-        setCart([...cart, item]); // add item to cart state array
-        navigation.navigate("MyCartScreen", { cart: item });
-    };
+
 
     return (
         <View style={styles.container}>
@@ -149,6 +160,7 @@ const ProductDetailScreen: React.FC<PropsType> = props => {
                         keyExtractor={(item) => item.key}
                         horizontal={true}
                         showsHorizontalScrollIndicator={false}
+                        ListFooterComponent={footerComponent}
                     />
                 </View>
                 <Text style={styles.reviewText}>Review ({detail.productReviews})</Text>
@@ -240,14 +252,6 @@ const ProductDetailScreen: React.FC<PropsType> = props => {
                         horizontal={true}
                         showsHorizontalScrollIndicator={false}
                     />
-                </View>
-                <View style={styles.buttonRow}>
-                    <Pressable style={styles.btnAdd} onPress={() => _cart}>
-                        <Text style={styles.txtAdd}>Add to Cart</Text>
-                    </Pressable>
-                    <Pressable style={styles.btnBuy} onPress={_handleReiceipt}>
-                        <Text style={styles.txtBuy}>Buy now</Text>
-                    </Pressable>
                 </View>
             </ScrollView>
         </View>
