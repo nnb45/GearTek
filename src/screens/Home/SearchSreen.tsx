@@ -28,8 +28,8 @@ const SearchScreen: React.FC<PropsType> = props => {
         } catch (error) {
             console.error('Error searching:', error);
         }
-    }, [text]); // Add the `text` dependency here
-    //render item Result
+    }, [text]);
+
     const _itemResult = useCallback(({ item }: { item: Product }) => {
         const _detail = () => {
             navigation.navigate('ProductDetailScreen', {
@@ -39,24 +39,18 @@ const SearchScreen: React.FC<PropsType> = props => {
         return (
             <TouchableOpacity style={styles.cardPopular} onPress={_detail}>
                 <View style={styles.itemPopular}>
-                    <Image
-                        style={styles.imgProduct}
-                        source={{ uri: item.productImages[0] }} />
+                    <Image style={styles.imgProduct} source={{ uri: item.productImages[0].image }} />
                 </View>
                 <View style={styles.cardMoney}>
                     <Text style={styles.txtNameProduct} numberOfLines={1} ellipsizeMode='tail'>{item.productName}</Text>
                     <Text style={styles.txtPriceProduct}>USD {item.productPrice.toString()}</Text>
                     <View style={styles.cardRating}>
                         <View style={styles.itemRating}>
-                            <Image
-                                style={{ width: 16, height: 16 }}
-                                source={IC_STAR} />
+                            <Image style={{ width: 16, height: 16 }} source={IC_STAR} />
                             <Text style={styles.txtRating}>{item.productRates.toString()}</Text>
                         </View>
                         <Text style={styles.txtNumberReviews}>({item.productReviews.toString()} Reviews)</Text>
-                        <Image
-                            style={{ width: 20, height: 20 }}
-                            source={IC_MORE} />
+                        <Image style={{ width: 20, height: 20 }} source={IC_MORE} />
                     </View>
                 </View>
             </TouchableOpacity>
